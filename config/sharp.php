@@ -1,9 +1,13 @@
 <?php
 
+use App\Sharp\ClimaSharpMenu;
+use App\Sharp\Member\MemberEntity;
+use App\Sharp\User\UserEntity;
+
 return [
 
     // Required. The name of your app, as it will be displayed in Sharp.
-    "name" => "Sharp",
+    "name" => "CLI.M.A.",
 
     // Optional. You can here customize the URL segment in which Sharp will live. Default in "sharp".
     "custom_url_segment" => "sharp",
@@ -28,7 +32,8 @@ return [
 
     // Required. Your entities list, as entityKey => \App\Sharp\Entities\SharpEntity implementation
     "entities" => [
-//        "my_entity" => \App\Sharp\Entities\MyEntity::class,
+        "user" => UserEntity::class,
+        "member" => MemberEntity::class,
     ],
 
     // Optional. Your dashboards list, as entityKey => \App\Sharp\Entities\SharpDashboardEntity implementation
@@ -43,7 +48,7 @@ return [
 
     // Required. The main menu (left bar), which may contain links to entities, dashboards
     // or external URLs, grouped in categories.
-    "menu" => null, //\App\Sharp\SharpMenu::class
+    "menu" => ClimaSharpMenu::class,
 
     // Optional. Your file upload configuration.
     "uploads" => [
@@ -54,7 +59,7 @@ return [
         "thumbnails_disk" => env("SHARP_UPLOADS_THUMBS_DISK", "public"),
         "thumbnails_dir" => env("SHARP_UPLOADS_THUMBS_DIR", "thumbnails"),
     ],
-    
+
     // Optional. Options for form markdown editor (SharpFormMarkdownField)
     "markdown_editor" => [
         // If false, the UL tool will display a dropdown to choose between tight and normal lists
