@@ -27,6 +27,8 @@ class UserForm extends SharpForm
 {
     use WithSharpFormEloquentUpdater;
 
+    protected ?string $formValidatorClass = UserValidator::class;
+
     function buildFormFields(FieldsContainer $formFields) : void
     {
         $formFields
