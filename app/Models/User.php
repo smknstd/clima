@@ -22,6 +22,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'description',
+        'website_url',
         'password',
         'role',
     ];
@@ -43,7 +45,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'role' => UserRole::class,
-        'state' => UserState::class,
     ];
 
     protected $dates = [
