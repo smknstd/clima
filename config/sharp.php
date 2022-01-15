@@ -78,7 +78,7 @@ return [
         "display_attribute" => "name",
 
         // Optional additional auth check.
-//        "check_handler" => \App\Sharp\Auth\MySharpCheckHandler::class,
+//        "check_handler" => \App\Sharp\ClimaSharpCheckHandler::class,
 
         // Optional custom guard
 //        "guard" => "sharp",

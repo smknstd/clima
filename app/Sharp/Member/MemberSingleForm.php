@@ -2,25 +2,20 @@
 
 namespace App\Sharp\Member;
 
-use App\Models\Enums\UserRole;
-use App\Models\Homepage;
 use Code16\Sharp\Form\Eloquent\Uploads\Transformers\SharpUploadModelFormAttributeTransformer;
 use Code16\Sharp\Form\Eloquent\WithSharpFormEloquentUpdater;
-use Code16\Sharp\Form\Fields\SharpFormAutocompleteField;
-use Code16\Sharp\Form\Fields\SharpFormListField;
-use Code16\Sharp\Form\Fields\SharpFormSelectField;
-use Code16\Sharp\Form\Fields\SharpFormTextareaField;
 use Code16\Sharp\Form\Fields\SharpFormTextField;
 use Code16\Sharp\Form\Fields\SharpFormUploadField;
 use Code16\Sharp\Form\Layout\FormLayout;
 use Code16\Sharp\Form\Layout\FormLayoutColumn;
-use Code16\Sharp\Form\Layout\FormLayoutFieldset;
 use Code16\Sharp\Form\SharpSingleForm;
 use Code16\Sharp\Utils\Fields\FieldsContainer;
 
 class MemberSingleForm extends SharpSingleForm
 {
     use WithSharpFormEloquentUpdater;
+
+    protected ?string $formValidatorClass = MemberValidator::class;
 
     function buildFormFields(FieldsContainer $formFields) : void
     {

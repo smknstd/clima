@@ -2,6 +2,7 @@
 
 namespace App\Sharp\Member;
 
+use App\Models\User;
 use Code16\Sharp\Show\Fields\SharpShowPictureField;
 use Code16\Sharp\Show\Fields\SharpShowTextField;
 use Code16\Sharp\Show\Layout\ShowLayout;
@@ -26,6 +27,14 @@ class MemberSingleShow extends SharpSingleShow
             )
             ->addField(
                 SharpShowPictureField::make("avatar")
+            )
+            ->addField(
+                SharpShowTextField::make('description')
+                    ->setLabel('Description')
+            )
+            ->addField(
+                SharpShowTextField::make('website_url')
+                    ->setLabel('Lien vers un site web externe')
             );
     }
 
@@ -37,7 +46,9 @@ class MemberSingleShow extends SharpSingleShow
                     ->addColumn(6, function (ShowLayoutColumn $column) {
                         $column
                             ->withSingleField('name')
-                            ->withSingleField('email');
+                            ->withSingleField('email')
+                            ->withSingleField('description')
+                            ->withSingleField('website_url');
                     })
                     ->addColumn(6, function (ShowLayoutColumn $column) {
                         $column
@@ -49,6 +60,9 @@ class MemberSingleShow extends SharpSingleShow
     public function findSingle(): array
     {
         return $this
+            ->setCustomTransformer("website_url", function ($value, User $user) {
+                return sprintf("<a href='%s'>%s</a>", $value, $value);
+            })
             ->setCustomTransformer("avatar", new SharpUploadModelThumbnailUrlTransformer(140))
             ->transform(auth()->user());
     }

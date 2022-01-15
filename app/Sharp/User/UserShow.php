@@ -27,6 +27,14 @@ class UserShow extends SharpShow
                     ->setLabel('Email')
             )
             ->addField(
+                SharpShowTextField::make('description')
+                    ->setLabel('Description')
+            )
+            ->addField(
+                SharpShowTextField::make('website_url')
+                    ->setLabel('Lien vers un site web externe')
+            )
+            ->addField(
                 SharpShowTextField::make('created_at')
                     ->setLabel('Création')
             )
@@ -47,7 +55,9 @@ class UserShow extends SharpShow
                      ->addColumn(6, function(ShowLayoutColumn $column) {
                          $column
                              ->withSingleField('name')
-                             ->withSingleField('email');
+                             ->withSingleField('email')
+                             ->withSingleField('description')
+                             ->withSingleField('website_url');
                      })
                      ->addColumn(6, function(ShowLayoutColumn $column) {
                          $column
@@ -87,8 +97,14 @@ class UserShow extends SharpShow
             ->setCustomTransformer("created_at", function ($value, User $user) {
                 return $user->created_at->format("d/m/y H:i");
             })
+            ->setCustomTransformer("description", function ($value, User $user) {
+                return $value ?? '<i>Non renseigné</i>';
+            })
             ->setCustomTransformer("role", function ($value, User $user) {
                 return $user->role->label();
+            })
+            ->setCustomTransformer("website_url", function ($value, User $user) {
+                return sprintf("<a href='%s'>%s</a>", $value, $value);
             })
             ->setCustomTransformer("avatar", new SharpUploadModelThumbnailUrlTransformer(140))
             ->transform(User::findOrFail($id));

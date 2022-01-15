@@ -12,6 +12,7 @@ use Code16\Sharp\Exceptions\Form\SharpApplicativeException;
 use Code16\Sharp\Form\Eloquent\Uploads\Transformers\SharpUploadModelFormAttributeTransformer;
 use Code16\Sharp\Form\Eloquent\WithSharpFormEloquentUpdater;
 use Code16\Sharp\Form\Fields\SharpFormSelectField;
+use Code16\Sharp\Form\Fields\SharpFormTextareaField;
 use Code16\Sharp\Form\Fields\SharpFormTextField;
 use Code16\Sharp\Form\Fields\SharpFormUploadField;
 use Code16\Sharp\Form\Layout\FormLayout;
@@ -53,6 +54,16 @@ class UserForm extends SharpForm
                     ->setMaxLength(150)
             )
             ->addField(
+                SharpFormTextareaField::make("description")
+                    ->setLabel("Description")
+                    ->setRowCount(4)
+            )
+            ->addField(
+                SharpFormTextField::make("website_url")
+                    ->setLabel("Lien vers un site web externe")
+                    ->setMaxLength(300)
+            )
+            ->addField(
                 SharpFormSelectField::make(
                     "role",
                     UserRole::getAllRolesAsArray()
@@ -67,7 +78,9 @@ class UserForm extends SharpForm
             ->addColumn(6, function(FormLayoutColumn $column) {
                 $column
                     ->withFields("name")
-                    ->withFields("email");
+                    ->withFields("email")
+                    ->withFields("description")
+                    ->withFields("website_url");
             })
             ->addColumn(6, function(FormLayoutColumn $column) {
                 $column

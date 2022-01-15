@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Enums\UserRole;
+use App\Models\Enums\UserState;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -41,7 +42,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'role' => UserRole::class
+        'role' => UserRole::class,
+        'state' => UserState::class,
     ];
 
     protected $dates = [

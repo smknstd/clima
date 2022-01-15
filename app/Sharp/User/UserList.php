@@ -3,6 +3,7 @@
 namespace App\Sharp\User;
 
 use App\Models\User;
+use App\Sharp\User\Commands\MemberImpersonateCommand;
 use App\Sharp\User\Commands\UserSetPassword;
 use Code16\Sharp\EntityList\Fields\EntityListField;
 use Code16\Sharp\EntityList\Fields\EntityListFieldsContainer;
@@ -54,7 +55,8 @@ class UserList extends SharpEntityList
     function getInstanceCommands(): ?array
     {
         return [
-            "set-password" => new UserSetPassword()
+            "set-password" => new UserSetPassword(),
+            "impersonate" => new MemberImpersonateCommand(),
         ];
     }
 
