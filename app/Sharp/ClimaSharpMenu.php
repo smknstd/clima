@@ -10,6 +10,7 @@ class ClimaSharpMenu extends SharpMenu
     {
         return $this
             ->addEntityLink("user", "Utilisateurs", "fas fa-user")
-            ->addEntityLink("member", "Mon compte", "fas fa-user");
+            ->addEntityLink("member", "Mon compte", "fas fa-user")
+            ->addEntityLink("station", "Mes stations", "fas fa-thermometer-half");
     }
 }

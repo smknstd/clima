@@ -14,18 +14,18 @@ class UserValidator extends SharpFormRequest
         return [
             "name" => [
                 "required",
-                "max:300"
+                "max:300",
             ],
             "email" => [
                 "required",
                 "email",
                 "max:150",
                 Rule::unique("users", "email")
-                    ->ignore(currentSharpRequest()->instanceId())
+                    ->ignore(currentSharpRequest()->instanceId()),
             ],
             "role" => [
                 "required",
-                new Enum(UserRole::class)
+                new Enum(UserRole::class),
             ],
         ];
     }

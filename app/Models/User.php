@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Models\Enums\UserRole;
-use App\Models\Enums\UserState;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -52,6 +52,11 @@ class User extends Authenticatable
         'updated_at',
         'deleted_at',
     ];
+
+    public function weatherStations(): HasMany
+    {
+        return $this->hasMany(WeatherStation::class, 'user_id');
+    }
 
     public function avatar(): MorphOne
     {

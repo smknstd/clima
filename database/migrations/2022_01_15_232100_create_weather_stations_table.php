@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateWeatherStationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('weather_stations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('website_url')->nullable();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('role');
+            $table->string('creation_date')->nullable();
+            $table->string('city');
+            $table->string('postal_code');
+            $table->unsignedInteger('altitude')->nullable();
+            $table->string('hardware_details')->nullable();
             $table->softDeletes();
-            $table->rememberToken();
+            $table->foreignId("user_id")->constrained();
             $table->timestamps();
         });
     }

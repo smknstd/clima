@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Enums\UserRole;
 use App\Models\Media;
 use App\Models\User;
+use App\Models\WeatherStation;
 use Faker\Generator;
 use Illuminate\Container\Container;
 use Illuminate\Database\Seeder;
@@ -64,6 +65,18 @@ class DatabaseSeeder extends Seeder
             ->withFile($adminAvatarFilename)
             ->create();
 
+        $this->seedWeatherStation($admin, [
+            "name" => "Station #1",
+            "city" => "Haegen",
+            "postal_code" => "67700",
+        ]);
+
+        $this->seedWeatherStation($admin, [
+            "name" => "Station #2",
+            "city" => "Saverne",
+            "postal_code" => "67100",
+        ]);
+
         $member = User::factory()->create([
             "email" => "member@example.org",
             "role" => UserRole::USER->value
@@ -82,5 +95,35 @@ class DatabaseSeeder extends Seeder
         ])
             ->withFile($memberAvatarFilename)
             ->create();
+
+        $this->seedWeatherStation($member, [
+            "name" => "Vantage",
+            "city" => "Hultehouse",
+            "postal_code" => "57820",
+        ]);
+    }
+
+    private function seedWeatherStation(User $user, array $stationAttributes = [])
+    {
+        $station = WeatherStation::factory()->create([
+            "user_id" => $user->id,
+            ...$stationAttributes
+        ]);
+
+        for ($i=0;$i<3;$i++) {
+            $stationVisualFilename = $this->faker->image(
+                storage_path("app/data"),
+                1024,
+                750
+            );
+
+            Media::factory([
+                'model_id' => $station->id,
+                "model_type" => WeatherStation::class,
+                "model_key" => "visuals",
+            ])
+                ->withFile($stationVisualFilename)
+                ->create();
+        }
     }
 }

@@ -15,12 +15,6 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $fakerFileName = $this->faker->image(
-            storage_path("app/data"),
-            800,
-            600
-        );
-
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
