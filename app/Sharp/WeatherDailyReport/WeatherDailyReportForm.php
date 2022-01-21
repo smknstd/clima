@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\WeatherStation;
+namespace App\Sharp\WeatherDailyReport;
 
 use App\Models\WeatherStation;
 use Code16\Sharp\Form\Eloquent\Uploads\Transformers\SharpUploadModelFormAttributeTransformer;
@@ -14,11 +14,11 @@ use Code16\Sharp\Form\Layout\FormLayoutColumn;
 use Code16\Sharp\Form\SharpForm;
 use Code16\Sharp\Utils\Fields\FieldsContainer;
 
-class WeatherStationForm extends SharpForm
+class WeatherDailyReportForm extends SharpForm
 {
     use WithSharpFormEloquentUpdater;
 
-    protected ?string $formValidatorClass = WeatherStationValidator::class;
+    protected ?string $formValidatorClass = WeatherDailyReportValidator::class;
 
     function buildFormFields(FieldsContainer $formFields) : void
     {

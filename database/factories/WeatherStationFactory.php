@@ -23,6 +23,7 @@ class WeatherStationFactory extends Factory
             'altitude' => "355",
             'postal_code' => "67700",
             'hardware_details' => "Vantage Pro 2",
+            'website_url' => "https://www.meteociel.fr/station/198523",
         ];
     }
 }

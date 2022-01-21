@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Sharp\WeatherStation;
+namespace App\Sharp\WeatherDailyReport;
 
 use App\Models\Enums\UserRole;
 use Code16\Sharp\Form\Validator\SharpFormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 
-class WeatherStationValidator extends SharpFormRequest
+class WeatherDailyReportValidator extends SharpFormRequest
 {
     public function rules(): array
     {

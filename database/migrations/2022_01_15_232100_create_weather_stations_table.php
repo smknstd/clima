@@ -22,6 +22,7 @@ class CreateWeatherStationsTable extends Migration
             $table->string('postal_code');
             $table->unsignedInteger('altitude')->nullable();
             $table->string('hardware_details')->nullable();
+            $table->string('website_url')->nullable();
             $table->softDeletes();
             $table->foreignId("user_id")->constrained();
             $table->timestamps();
@@ -35,6 +36,6 @@ class CreateWeatherStationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('weather_stations');
     }
 }

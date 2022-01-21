@@ -15,4 +15,19 @@ class UserPolicy
     {
         return $user->isAdmin();
     }
+
+    public function update(User $user, $userId)
+    {
+        return $user->isAdmin();
+    }
+
+    public function create(User $user, $userId)
+    {
+        return $user->isAdmin();
+    }
+
+    public function delete(User $user, $userId)
+    {
+        return $user->isAdmin();
+    }
 }

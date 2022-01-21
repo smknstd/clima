@@ -2,16 +2,15 @@
 
 namespace App\Sharp\WeatherStation;
 
-use App\Models\User;
-use App\Sharp\User\Commands\UserSetPassword;
-use Code16\Sharp\Show\Fields\SharpShowPictureField;
+use App\Models\Media;
+use App\Models\WeatherStation;
+use Code16\Sharp\Show\Fields\SharpShowEntityListField;
 use Code16\Sharp\Show\Fields\SharpShowTextField;
 use Code16\Sharp\Show\Layout\ShowLayout;
 use Code16\Sharp\Show\Layout\ShowLayoutColumn;
 use Code16\Sharp\Show\Layout\ShowLayoutSection;
 use Code16\Sharp\Show\SharpShow;
 use Code16\Sharp\Utils\Fields\FieldsContainer;
-use Code16\Sharp\Utils\Transformers\Attributes\Eloquent\SharpUploadModelThumbnailUrlTransformer;
 
 class WeatherStationShow extends SharpShow
 {
@@ -23,10 +22,6 @@ class WeatherStationShow extends SharpShow
                     ->setLabel('Nom')
             )
             ->addField(
-                SharpShowTextField::make('email')
-                    ->setLabel('Email')
-            )
-            ->addField(
                 SharpShowTextField::make('description')
                     ->setLabel('Description')
             )
@@ -35,15 +30,34 @@ class WeatherStationShow extends SharpShow
                     ->setLabel('Lien vers un site web externe')
             )
             ->addField(
-                SharpShowTextField::make('created_at')
-                    ->setLabel('Création')
+                SharpShowTextField::make('creation_date')
+                    ->setLabel('Date de mise en service')
             )
             ->addField(
-                SharpShowTextField::make('role')
-                    ->setLabel('Droits')
+                SharpShowTextField::make('city')
+                    ->setLabel('Ville')
             )
             ->addField(
-                SharpShowPictureField::make("avatar")
+                SharpShowTextField::make('postal_code')
+                    ->setLabel('Code postal')
+            )
+            ->addField(
+                SharpShowTextField::make('altitude')
+                    ->setLabel('Altitude')
+            )
+            ->addField(
+                SharpShowTextField::make('hardware_details')
+                    ->setLabel('Détails du matériel utilisé')
+            )
+            ->addField(
+                SharpShowTextField::make("visuals")
+            )
+            ->addField(
+                SharpShowEntityListField::make("daily_reports", "daily_reports")
+                    ->setLabel("Relevés")
+                    ->hideFilterWithValue("weather_station_id", function ($instanceId) {
+                        return $instanceId;
+                    })
             );
     }
 
@@ -55,27 +69,28 @@ class WeatherStationShow extends SharpShow
                      ->addColumn(6, function(ShowLayoutColumn $column) {
                          $column
                              ->withSingleField('name')
-                             ->withSingleField('email')
                              ->withSingleField('description')
+                             ->withSingleField('creation_date');
+                     })
+                     ->addColumn(6, function(ShowLayoutColumn $column) {
+                         $column
+                             ->withSingleField('city')
+                             ->withSingleField('altitude');
+                     });
+             })
+             ->addSection('Matériel', function(ShowLayoutSection $section) {
+                 $section
+                     ->addColumn(6, function(ShowLayoutColumn $column) {
+                         $column
+                             ->withSingleField('hardware_details')
                              ->withSingleField('website_url');
                      })
                      ->addColumn(6, function(ShowLayoutColumn $column) {
                          $column
-                             ->withSingleField('avatar');
+                             ->withSingleField('visuals');
                      });
              })
-             ->addSection('Details', function(ShowLayoutSection $section) {
-                 $section
-                     ->addColumn(6, function(ShowLayoutColumn $column) {
-                         $column
-                             ->withSingleField('role');
-                     })
-                     ->addColumn(6, function(ShowLayoutColumn $column) {
-                         $column
-                             ->withSingleField('created_at');
-                     });
-             });
-//             ->addEntityListSection("debates");
+             ->addEntityListSection("daily_reports");
     }
 
     public function buildShowConfig(): void
@@ -86,27 +101,26 @@ class WeatherStationShow extends SharpShow
 
     public function getInstanceCommands(): ?array
     {
-        return [
-            "set-password" => new UserSetPassword()
-        ];
+        return [];
     }
 
     public function find($id): array
     {
         return $this
-            ->setCustomTransformer("created_at", function ($value, User $user) {
-                return $user->created_at->format("d/m/y H:i");
+            ->setCustomTransformer("city", function ($value, WeatherStation $weatherStation) {
+                return $weatherStation->postal_code . " " . $weatherStation->city;
             })
-            ->setCustomTransformer("description", function ($value, User $user) {
+            ->setCustomTransformer("description", function ($value, WeatherStation $weatherStation) {
                 return $value ?? '<i>Non renseigné</i>';
             })
-            ->setCustomTransformer("role", function ($value, User $user) {
-                return $user->role->label();
+            ->setCustomTransformer("visuals",function ($value, WeatherStation $weatherStation) {
+                return $weatherStation->visuals->reduce(function($acc, Media $visual) {
+                    return $acc . '<img src="' . $visual->thumbnail(140) . '" alt="" class="img-fluid">';
+                }, '');
             })
-            ->setCustomTransformer("website_url", function ($value, User $user) {
+            ->setCustomTransformer("website_url", function ($value, WeatherStation $weatherStation) {
                 return sprintf("<a href='%s'>%s</a>", $value, $value);
             })
-            ->setCustomTransformer("avatar", new SharpUploadModelThumbnailUrlTransformer(140))
-            ->transform(User::findOrFail($id));
+            ->transform(WeatherStation::findOrFail($id));
     }
 }

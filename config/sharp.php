@@ -3,6 +3,7 @@
 use App\Sharp\ClimaSharpMenu;
 use App\Sharp\Member\MemberEntity;
 use App\Sharp\User\UserEntity;
+use App\Sharp\WeatherDailyReport\WeatherDailyReportEntity;
 use App\Sharp\WeatherStation\WeatherStationEntity;
 
 return [
@@ -36,6 +37,7 @@ return [
         "user" => UserEntity::class,
         "member" => MemberEntity::class,
         "station" => WeatherStationEntity::class,
+        "daily_reports" => WeatherDailyReportEntity::class,
     ],
 
     // Optional. Your dashboards list, as entityKey => \App\Sharp\Entities\SharpDashboardEntity implementation

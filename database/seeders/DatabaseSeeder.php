@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Enums\UserRole;
 use App\Models\Media;
 use App\Models\User;
+use App\Models\WeatherDailyReport;
 use App\Models\WeatherStation;
 use Faker\Generator;
 use Illuminate\Container\Container;
@@ -124,6 +125,29 @@ class DatabaseSeeder extends Seeder
             ])
                 ->withFile($stationVisualFilename)
                 ->create();
+        }
+
+        for ($i=0;$i<50;$i++) {
+            $report = WeatherDailyReport::factory()->create([
+                "weather_station_id" => $station->id,
+                "date" => today()->subDays($i),
+            ]);
+
+            if ($i === 1) {
+                $reportVisualFilename = $this->faker->image(
+                    storage_path("app/data"),
+                    1024,
+                    750
+                );
+
+                Media::factory([
+                    'model_id' => $report->id,
+                    "model_type" => WeatherDailyReport::class,
+                    "model_key" => "visuals",
+                ])
+                    ->withFile($reportVisualFilename)
+                    ->create();
+            }
         }
     }
 }
