@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\User;
+namespace App\Sharp\Admin\User;
 
 use App\Models\Enums\FederationEnum;
 use App\Models\Enums\OrganizationTypeEnum;
@@ -8,7 +8,6 @@ use App\Models\Enums\StateEnum;
 use App\Models\Enums\UserRole;
 use App\Models\User;
 use App\Sharp\User\Transformers\UserRolesTransformer;
-use Code16\Sharp\Exceptions\Form\SharpApplicativeException;
 use Code16\Sharp\Form\Eloquent\Uploads\Transformers\SharpUploadModelFormAttributeTransformer;
 use Code16\Sharp\Form\Eloquent\WithSharpFormEloquentUpdater;
 use Code16\Sharp\Form\Fields\SharpFormSelectField;
@@ -17,10 +16,8 @@ use Code16\Sharp\Form\Fields\SharpFormTextField;
 use Code16\Sharp\Form\Fields\SharpFormUploadField;
 use Code16\Sharp\Form\Layout\FormLayout;
 use Code16\Sharp\Form\Layout\FormLayoutColumn;
-use Code16\Sharp\Form\Layout\FormLayoutFieldset;
 use Code16\Sharp\Form\SharpForm;
 use Code16\Sharp\Utils\Fields\FieldsContainer;
-use Code16\Sharp\Utils\Transformers\Attributes\Eloquent\SharpUploadModelThumbnailUrlTransformer;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
@@ -130,6 +127,11 @@ class UserForm extends SharpForm
 
     public function delete($id): void
     {
-        User::findOrFail($id)->delete();
+        /** @var User $user */
+        $user = User::findOrFail($id);
+
+        $user->logout(); //@todo does it work ?
+        $user->delete();
+
     }
 }

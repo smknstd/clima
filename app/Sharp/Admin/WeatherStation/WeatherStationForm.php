@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\WeatherStation;
+namespace App\Sharp\Admin\WeatherStation;
 
 use App\Models\WeatherStation;
 use Code16\Sharp\Form\Eloquent\Uploads\Transformers\SharpUploadModelFormAttributeTransformer;

@@ -1,18 +1,23 @@
 <?php
 
-namespace App\Sharp\WeatherStation;
+namespace App\Sharp\MyWeatherStation;
 
 use App\Models\Media;
+use App\Models\User;
+use App\Models\WeatherDailyReport;
 use App\Models\WeatherStation;
+use Carbon\Carbon;
 use Code16\Sharp\Show\Fields\SharpShowEntityListField;
 use Code16\Sharp\Show\Fields\SharpShowTextField;
 use Code16\Sharp\Show\Layout\ShowLayout;
 use Code16\Sharp\Show\Layout\ShowLayoutColumn;
 use Code16\Sharp\Show\Layout\ShowLayoutSection;
 use Code16\Sharp\Show\SharpShow;
+use Code16\Sharp\Show\SharpSingleShow;
 use Code16\Sharp\Utils\Fields\FieldsContainer;
+use Code16\Sharp\Utils\Transformers\Attributes\Eloquent\SharpUploadModelThumbnailUrlTransformer;
 
-class WeatherStationShow extends SharpShow
+class WeatherStationSingleShow extends SharpSingleShow
 {
     protected function buildShowFields(FieldsContainer $showFields): void
     {
@@ -50,14 +55,19 @@ class WeatherStationShow extends SharpShow
                     ->setLabel('Détails du matériel utilisé')
             )
             ->addField(
-                SharpShowTextField::make("visuals")
+                SharpShowTextField::make('total_report_count')
+                    ->setLabel('Nombre total de relevés')
             )
             ->addField(
-                SharpShowEntityListField::make("daily_reports", "daily_reports")
-                    ->setLabel("Relevés")
-                    ->hideFilterWithValue("weather_station_id", function ($instanceId) {
-                        return $instanceId;
-                    })
+                SharpShowTextField::make('oldest_report_date')
+                    ->setLabel('Date du plus ancien relevé')
+            )
+            ->addField(
+                SharpShowTextField::make('last_report_date')
+                    ->setLabel('Date du relevé le plus récent')
+            )
+            ->addField(
+                SharpShowTextField::make("visuals")
             );
     }
 
@@ -90,7 +100,15 @@ class WeatherStationShow extends SharpShow
                              ->withSingleField('visuals');
                      });
              })
-             ->addEntityListSection("daily_reports");
+             ->addSection('Relevés journaliers', function(ShowLayoutSection $section) {
+                 $section
+                     ->addColumn(6, function(ShowLayoutColumn $column) {
+                         $column
+                             ->withSingleField('total_report_count')
+                             ->withSingleField('oldest_report_date')
+                             ->withSingleField('last_report_date');
+                     });
+             });
     }
 
     public function buildShowConfig(): void
@@ -104,9 +122,24 @@ class WeatherStationShow extends SharpShow
         return [];
     }
 
-    public function find($id): array
+    public function findSingle(): array
     {
         return $this
+            ->setCustomTransformer("total_report_count", function ($value, WeatherStation $weatherStation) {
+                return WeatherDailyReport::where('weather_station_id', $weatherStation->id)->count();
+            })
+            ->setCustomTransformer("oldest_report_date", function ($value, WeatherStation $weatherStation) {
+                if ($result = WeatherDailyReport::selectRaw('min(date) as oldest_created_at')->where('weather_station_id', $weatherStation->id)->first()) {
+                    return Carbon::parse($result->oldest_created_at)->isoFormat('LL');
+                }
+                return 'aucun relevé enregistré';
+            })
+            ->setCustomTransformer("last_report_date", function ($value, WeatherStation $weatherStation) {
+                if ($result = WeatherDailyReport::selectRaw('max(date) as last_created_at')->where('weather_station_id', $weatherStation->id)->first()) {
+                    return Carbon::parse($result->last_created_at)->isoFormat('LL');
+                }
+                return 'aucun relevé enregistré';
+            })
             ->setCustomTransformer("city", function ($value, WeatherStation $weatherStation) {
                 return $weatherStation->postal_code . " " . $weatherStation->city;
             })
@@ -121,6 +154,6 @@ class WeatherStationShow extends SharpShow
             ->setCustomTransformer("website_url", function ($value, WeatherStation $weatherStation) {
                 return sprintf("<a href='%s'>%s</a>", $value, $value);
             })
-            ->transform(WeatherStation::findOrFail($id));
+            ->transform(auth()->user()->weatherStation);
     }
 }

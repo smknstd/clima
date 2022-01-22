@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\WeatherDailyReport;
+namespace App\Sharp\MyWeatherStation;
 
 use App\Models\WeatherStation;
 use Code16\Sharp\Form\Eloquent\Uploads\Transformers\SharpUploadModelFormAttributeTransformer;
@@ -12,13 +12,14 @@ use Code16\Sharp\Form\Fields\SharpFormUploadField;
 use Code16\Sharp\Form\Layout\FormLayout;
 use Code16\Sharp\Form\Layout\FormLayoutColumn;
 use Code16\Sharp\Form\SharpForm;
+use Code16\Sharp\Form\SharpSingleForm;
 use Code16\Sharp\Utils\Fields\FieldsContainer;
 
-class WeatherDailyReportForm extends SharpForm
+class WeatherStationSingleForm extends SharpSingleForm
 {
     use WithSharpFormEloquentUpdater;
 
-    protected ?string $formValidatorClass = WeatherDailyReportValidator::class;
+    protected ?string $formValidatorClass = WeatherStationValidator::class;
 
     function buildFormFields(FieldsContainer $formFields) : void
     {
@@ -123,28 +124,19 @@ class WeatherDailyReportForm extends SharpForm
         return $this;
     }
 
-    function find($id): array
+    function findSingle(): array
     {
         return $this
             ->setCustomTransformer("visuals", new SharpUploadModelFormAttributeTransformer())
-            ->transform(WeatherStation::with('visuals')->findOrFail($id));
+            ->transform(auth()->user()->weatherStation);
     }
 
-    function update($id, array $data)
+    protected function updateSingle(array $data)
     {
-        $station = $id
-            ? WeatherStation::findOrFail($id)
-            : new WeatherStation([
-                "user_id" => auth()->id(),
-            ]);
+        $weatherStation = auth()->user()->weatherStation;
 
-        $this->save($station, $data);
+        $this->save($weatherStation, $data);
 
-        return $station->id;
-    }
-
-    public function delete($id): void
-    {
-        WeatherStation::findOrFail($id)->delete();
+        return $weatherStation->id;
     }
 }

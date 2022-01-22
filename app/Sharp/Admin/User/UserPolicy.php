@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\User;
+namespace App\Sharp\Admin\User;
 
 use App\Models\User;
 
@@ -21,7 +21,7 @@ class UserPolicy
         return $user->isAdmin();
     }
 
-    public function create(User $user, $userId)
+    public function create(User $user)
     {
         return $user->isAdmin();
     }

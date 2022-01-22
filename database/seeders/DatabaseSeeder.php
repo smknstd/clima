@@ -72,12 +72,6 @@ class DatabaseSeeder extends Seeder
             "postal_code" => "67700",
         ]);
 
-        $this->seedWeatherStation($admin, [
-            "name" => "Station #2",
-            "city" => "Saverne",
-            "postal_code" => "67100",
-        ]);
-
         $member = User::factory()->create([
             "email" => "member@example.org",
             "role" => UserRole::USER->value

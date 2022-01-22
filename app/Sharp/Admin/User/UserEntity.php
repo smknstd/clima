@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\User;
+namespace App\Sharp\Admin\User;
 
 use Code16\Sharp\Utils\Entities\SharpEntity;
 

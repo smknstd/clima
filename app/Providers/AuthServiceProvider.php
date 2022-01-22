@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Listeners\LoginEventListener;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Event;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Event::listen(Login::class, LoginEventListener::class);
+
     }
 }

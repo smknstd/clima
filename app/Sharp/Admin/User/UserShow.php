@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Sharp\User;
+namespace App\Sharp\Admin\User;
 
 use App\Models\User;
-use App\Sharp\User\Commands\UserSetPassword;
+use App\Sharp\Admin\User\Commands\UserSetPassword;
 use Code16\Sharp\Show\Fields\SharpShowPictureField;
 use Code16\Sharp\Show\Fields\SharpShowTextField;
 use Code16\Sharp\Show\Layout\ShowLayout;

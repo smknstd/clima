@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Sharp\WeatherDailyReport;
+namespace App\Sharp\MyWeatherDailyReport;
 
 use Code16\Sharp\Utils\Entities\SharpEntity;
 
-class WeatherDailyReportEntity extends SharpEntity
+class MyWeatherDailyReportEntity extends SharpEntity
 {
     protected ?string $list = WeatherDailyReportList::class;
     protected ?string $form = WeatherDailyReportForm::class;

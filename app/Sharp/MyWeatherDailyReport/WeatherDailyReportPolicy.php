@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\WeatherDailyReport;
+namespace App\Sharp\MyWeatherDailyReport;
 
 use App\Models\User;
 

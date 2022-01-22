@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Sharp\User\Commands;
+namespace App\Sharp\Admin\User\Commands;
 
 use App\Models\User;
 use Code16\Sharp\EntityList\Commands\InstanceCommand;
 use Code16\Sharp\Form\Fields\SharpFormTextField;
 use Code16\Sharp\Utils\Fields\FieldsContainer;
 use Illuminate\Support\Facades\Hash;
+use function auth;
 
 class UserSetPassword extends InstanceCommand
 {

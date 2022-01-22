@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Sharp\User\Commands;
+namespace App\Sharp\Admin\User\Commands;
 
-use App\Models\User;
 use Code16\Sharp\EntityList\Commands\InstanceCommand;
 use Code16\Sharp\Utils\Links\LinkToSingleShowPage;
+use function auth;
 
 class MemberImpersonateCommand extends InstanceCommand
 {

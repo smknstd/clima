@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Sharp\WeatherDailyReport;
+namespace App\Sharp\Admin\WeatherDailyReport;
 
 use App\Models\Media;
 use App\Models\WeatherDailyReport;
 use App\Models\WeatherStation;
+use App\Sharp\MyWeatherDailyReport\Filters\ReportDateFilterHandler;
 use Code16\Sharp\EntityList\Fields\EntityListField;
 use Code16\Sharp\EntityList\Fields\EntityListFieldsContainer;
 use Code16\Sharp\EntityList\Fields\EntityListFieldsLayout;
@@ -17,8 +18,11 @@ class WeatherDailyReportList extends SharpEntityList
     {
         $fieldsContainer
             ->addField(
+                EntityListField::make("station")
+                    ->setLabel("Station")
+            )
+            ->addField(
                 EntityListField::make("date")
-                    ->setSortable()
                     ->setLabel("Date")
             )
             ->addField(
@@ -34,14 +38,24 @@ class WeatherDailyReportList extends SharpEntityList
     public function buildListLayout(EntityListFieldsLayout $fieldsLayout): void
     {
         $fieldsLayout
+            ->addColumn("station", 2)
             ->addColumn("date", 2)
             ->addColumn("visual", 2)
-            ->addColumn("comment", 8);
+            ->addColumn("comment", 6);
+    }
+
+    function getFilters(): ?array
+    {
+        return [
+            ReportDateFilterHandler::class,
+        ];
     }
 
     public function buildListConfig(): void
     {
-        $this->configurePaginated();
+        $this
+            ->configureSearchable()
+            ->configurePaginated();
     }
 
     function getInstanceCommands(): ?array
@@ -56,6 +70,25 @@ class WeatherDailyReportList extends SharpEntityList
 
     public function getListData(): array|Arrayable
     {
+        $reports = WeatherDailyReport::orderBy('date', 'desc');
+
+        if ($this->queryParams->hasSearch()) {
+            foreach ($this->queryParams->searchWords() as $word) {
+                $reports->where(function ($query) use ($word) {
+                    $query
+//                        ->where('last_name', 'like', $word)
+                        ->orWhere('comment', 'like', $word);
+                });
+            }
+        }
+
+        if ($date = $this->queryParams->filterFor("report_date")) {
+            $reports->whereBetween('date', [
+                $date['start'],
+                $date['end'],
+            ]);
+        }
+
 
         return $this
             ->setCustomTransformer("date",function ($value, WeatherDailyReport $weatherDailyReport) {
@@ -71,10 +104,12 @@ class WeatherDailyReportList extends SharpEntityList
 
                 }
             })
+            ->setCustomTransformer("station",function ($value, WeatherDailyReport $weatherDailyReport) {
+                $weatherStation = $weatherDailyReport->weatherStation;
+                return $weatherStation->city . ", " . $weatherStation->postal_code;
+            })
             ->transform(
-                WeatherDailyReport::where('weather_station_id', $this->queryParams->filterFor("weather_station_id"))
-                    ->orderBy('date', 'desc')
-                    ->paginate(40)
+                $reports->paginate(40)
             );
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\WeatherStation;
+namespace App\Sharp\Admin\WeatherStation;
 
 use App\Models\Enums\UserRole;
 use Code16\Sharp\Form\Validator\SharpFormRequest;

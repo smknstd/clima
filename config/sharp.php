@@ -1,10 +1,12 @@
 <?php
 
+use App\Sharp\Admin\User\UserEntity;
+use App\Sharp\Admin\WeatherDailyReport\WeatherDailyReportEntity;
+use App\Sharp\Admin\WeatherStation\WeatherStationEntity;
 use App\Sharp\ClimaSharpMenu;
 use App\Sharp\Member\MemberEntity;
-use App\Sharp\User\UserEntity;
-use App\Sharp\WeatherDailyReport\WeatherDailyReportEntity;
-use App\Sharp\WeatherStation\WeatherStationEntity;
+use App\Sharp\MyWeatherDailyReport\MyWeatherDailyReportEntity;
+use App\Sharp\MyWeatherStation\MyWeatherStationEntity;
 
 return [
 
@@ -34,9 +36,12 @@ return [
 
     // Required. Your entities list, as entityKey => \App\Sharp\Entities\SharpEntity implementation
     "entities" => [
-        "user" => UserEntity::class,
         "member" => MemberEntity::class,
-        "station" => WeatherStationEntity::class,
+        "my_station" => MyWeatherStationEntity::class,
+        "my_daily_reports" => MyWeatherDailyReportEntity::class,
+        //admin
+        "user" => UserEntity::class,
+        "stations" => WeatherStationEntity::class,
         "daily_reports" => WeatherDailyReportEntity::class,
     ],
 

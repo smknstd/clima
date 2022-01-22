@@ -24,7 +24,7 @@ class CreateWeatherStationsTable extends Migration
             $table->string('hardware_details')->nullable();
             $table->string('website_url')->nullable();
             $table->softDeletes();
-            $table->foreignId("user_id")->constrained();
+            $table->foreignId("user_id")->constrained()->unique();
             $table->timestamps();
         });
     }
