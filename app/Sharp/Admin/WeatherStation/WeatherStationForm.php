@@ -44,11 +44,6 @@ class WeatherStationForm extends SharpForm
                     )
             )
             ->addField(
-                SharpFormTextField::make("name")
-                    ->setLabel("Nom")
-                    ->setMaxLength(300)
-            )
-            ->addField(
                 SharpFormTextField::make("city")
                     ->setLabel("Ville")
                     ->setMaxLength(300)

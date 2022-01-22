@@ -23,10 +23,6 @@ class WeatherStationSingleShow extends SharpSingleShow
     {
         $showFields
             ->addField(
-                SharpShowTextField::make('name')
-                    ->setLabel('Nom')
-            )
-            ->addField(
                 SharpShowTextField::make('description')
                     ->setLabel('Description')
             )
@@ -78,7 +74,6 @@ class WeatherStationSingleShow extends SharpSingleShow
                  $section
                      ->addColumn(6, function(ShowLayoutColumn $column) {
                          $column
-                             ->withSingleField('name')
                              ->withSingleField('description')
                              ->withSingleField('creation_date');
                      })

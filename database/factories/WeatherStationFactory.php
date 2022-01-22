@@ -16,7 +16,6 @@ class WeatherStationFactory extends Factory
     public function definition()
     {
         return [
-            'name' => "Station #2",
             'description' => "Station installée dans un jardin particulier et sur le toit d'une maison dan sun lotissement",
             'creation_date' => "Janvier 1997",
             'city' => "Haegen",

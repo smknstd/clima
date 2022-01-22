@@ -45,11 +45,6 @@ class WeatherStationSingleForm extends SharpSingleForm
                     )
             )
             ->addField(
-                SharpFormTextField::make("name")
-                    ->setLabel("Nom")
-                    ->setMaxLength(300)
-            )
-            ->addField(
                 SharpFormTextField::make("city")
                     ->setLabel("Ville")
                     ->setMaxLength(300)
@@ -94,7 +89,6 @@ class WeatherStationSingleForm extends SharpSingleForm
         $formLayout
             ->addColumn(6, function(FormLayoutColumn $column) {
                 $column
-                    ->withFields("name")
                     ->withFields("description")
                     ->withFields("creation_date")
                     ->withFields("hardware_details")

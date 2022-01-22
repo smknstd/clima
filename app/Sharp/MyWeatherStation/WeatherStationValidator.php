@@ -12,10 +12,6 @@ class WeatherStationValidator extends SharpFormRequest
     public function rules(): array
     {
         return [
-            "name" => [
-                "required",
-                "max:300",
-            ],
             "description" => [
                 "max:2000",
             ],

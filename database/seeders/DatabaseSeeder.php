@@ -67,7 +67,6 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         $this->seedWeatherStation($admin, [
-            "name" => "Station #1",
             "city" => "Haegen",
             "postal_code" => "67700",
         ]);
@@ -92,7 +91,6 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         $this->seedWeatherStation($member, [
-            "name" => "Vantage",
             "city" => "Hultehouse",
             "postal_code" => "57820",
         ]);
