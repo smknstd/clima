@@ -1,5 +1,6 @@
 <?php
 
+use App\Sharp\Admin\Tag\TagEntity;
 use App\Sharp\Admin\User\UserEntity;
 use App\Sharp\Admin\WeatherDailyReport\WeatherDailyReportEntity;
 use App\Sharp\Admin\WeatherStation\WeatherStationEntity;
@@ -40,9 +41,10 @@ return [
         "my_station" => MyWeatherStationEntity::class,
         "my_daily_reports" => MyWeatherDailyReportEntity::class,
         //admin
-        "user" => UserEntity::class,
+        "users" => UserEntity::class,
         "stations" => WeatherStationEntity::class,
         "daily_reports" => WeatherDailyReportEntity::class,
+        "tags" => TagEntity::class,
     ],
 
     // Optional. Your dashboards list, as entityKey => \App\Sharp\Entities\SharpDashboardEntity implementation

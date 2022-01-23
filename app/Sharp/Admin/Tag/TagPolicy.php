@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Sharp\Admin\User;
+namespace App\Sharp\Admin\Tag;
+
 
 use App\Models\User;
 
-class UserPolicy
+class TagPolicy
 {
     public function entity(User $user)
     {

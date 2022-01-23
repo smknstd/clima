@@ -15,9 +15,12 @@ class ClimaSharpMenu extends SharpMenu
             ->addEntityLink("my_daily_reports", "Mes relevés", "fas fa-thermometer-half")
             ->addSection("Administration", function(SharpMenuItemSection $section) {
                 $section
-                    ->addEntityLink("user", "Utilisateurs", "fas fa-user")
+                    ->addEntityLink("users", "Utilisateurs", "fas fa-user")
+                    ->addSeparator('Météo')
                     ->addEntityLink("stations", "Stations", "fas fa-podcast")
-                    ->addEntityLink("daily_reports", "Relevés", "fas fa-thermometer-half");
+                    ->addEntityLink("daily_reports", "Relevés", "fas fa-thermometer-half")
+                    ->addSeparator('Blog')
+                    ->addEntityLink("tags", "Tags", "fas fa-tag");
             });
     }
 }

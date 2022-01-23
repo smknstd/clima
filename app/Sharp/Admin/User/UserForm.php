@@ -20,6 +20,7 @@ use Code16\Sharp\Form\SharpForm;
 use Code16\Sharp\Utils\Fields\FieldsContainer;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
+use Spatie\Tags\Tag;
 
 class UserForm extends SharpForm
 {
@@ -127,11 +128,6 @@ class UserForm extends SharpForm
 
     public function delete($id): void
     {
-        /** @var User $user */
-        $user = User::findOrFail($id);
-
-        $user->logout(); //@todo does it work ?
-        $user->delete();
-
+        Tag::find($id)->delete();
     }
 }
