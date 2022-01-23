@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\MyWeatherDailyReport;
+namespace App\Sharp\MyWeatherDailyReports;
 
 use App\Models\Enums\UserRole;
 use Code16\Sharp\Form\Validator\SharpFormRequest;

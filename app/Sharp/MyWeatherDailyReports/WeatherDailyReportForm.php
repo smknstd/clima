@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\MyWeatherDailyReport;
+namespace App\Sharp\MyWeatherDailyReports;
 
 use App\Models\Enums\WindDirection;
 use App\Models\WeatherDailyReport;

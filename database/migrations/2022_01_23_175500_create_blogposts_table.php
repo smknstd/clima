@@ -15,11 +15,12 @@ class CreateBlogpostsTable extends Migration
     {
         Schema::create('blogposts', function (Blueprint $table) {
             $table->id();
-            $table->text('description')->nullable();
-            $table->string('publication_date')->nullable();
+            $table->string('title');
+            $table->string('slug');
             $table->string('state');
             $table->string('type');
             $table->text('content')->nullable();
+            $table->timestamp('published_at');
             $table->foreignId("user_id")->constrained();
             $table->timestamps();
         });

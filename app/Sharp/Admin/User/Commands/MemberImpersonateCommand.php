@@ -35,7 +35,7 @@ class MemberImpersonateCommand extends InstanceCommand
         auth()->logout();
         auth()->loginUsingId($instanceId);
 
-        return $this->link(LinkToSingleShowPage::make('member')->renderAsUrl());
+        return $this->link(LinkToSingleShowPage::make('my_profile')->renderAsUrl());
     }
 
     /**

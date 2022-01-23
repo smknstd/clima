@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Sharp\MyWeatherDailyReport;
+namespace App\Sharp\MyProfile;
 
 use App\Models\User;
 
-class WeatherDailyReportPolicy
+class MemberPolicy
 {
     public function entity(User $user)
     {

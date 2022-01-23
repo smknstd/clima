@@ -5,8 +5,9 @@ use App\Sharp\Admin\User\UserEntity;
 use App\Sharp\Admin\WeatherDailyReport\WeatherDailyReportEntity;
 use App\Sharp\Admin\WeatherStation\WeatherStationEntity;
 use App\Sharp\ClimaSharpMenu;
-use App\Sharp\Member\MemberEntity;
-use App\Sharp\MyWeatherDailyReport\MyWeatherDailyReportEntity;
+use App\Sharp\MyBlogposts\BlogpostEntity;
+use App\Sharp\MyProfile\MemberEntity;
+use App\Sharp\MyWeatherDailyReports\MyWeatherDailyReportEntity;
 use App\Sharp\MyWeatherStation\MyWeatherStationEntity;
 
 return [
@@ -37,9 +38,10 @@ return [
 
     // Required. Your entities list, as entityKey => \App\Sharp\Entities\SharpEntity implementation
     "entities" => [
-        "member" => MemberEntity::class,
+        "my_profile" => MemberEntity::class,
         "my_station" => MyWeatherStationEntity::class,
         "my_daily_reports" => MyWeatherDailyReportEntity::class,
+        "my_blogposts" => BlogpostEntity::class,
         //admin
         "users" => UserEntity::class,
         "stations" => WeatherStationEntity::class,

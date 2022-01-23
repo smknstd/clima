@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\Member;
+namespace App\Sharp\MyProfile;
 
 use App\Models\Enums\UserRole;
 use Code16\Sharp\Form\Validator\SharpFormRequest;

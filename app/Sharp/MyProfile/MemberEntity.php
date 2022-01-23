@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\Member;
+namespace App\Sharp\MyProfile;
 
 use Code16\Sharp\Utils\Entities\SharpEntity;
 

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Blogpost;
 use App\Models\Enums\UserRole;
 use App\Models\Media;
 use App\Models\User;
@@ -94,6 +95,9 @@ class DatabaseSeeder extends Seeder
             "city" => "Hultehouse",
             "postal_code" => "57820",
         ]);
+
+        $this->seedBlogpost($admin);
+        $this->seedBlogpost($member);
     }
 
     private function seedWeatherStation(User $user, array $stationAttributes = [])
@@ -141,5 +145,27 @@ class DatabaseSeeder extends Seeder
                     ->create();
             }
         }
+    }
+
+    private function seedBlogpost(User $user, array $blogpostAttributes = [])
+    {
+        $blogpost = Blogpost::factory()->create([
+            "user_id" => $user->id,
+            ...$blogpostAttributes
+        ]);
+
+        $blogpostVisualFilename = $this->faker->image(
+            storage_path("app/data"),
+            1024,
+            750
+        );
+
+        Media::factory([
+            'model_id' => $blogpost->id,
+            "model_type" => Blogpost::class,
+            "model_key" => "cover",
+        ])
+            ->withFile($blogpostVisualFilename)
+            ->create();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\Member;
+namespace App\Sharp\MyProfile;
 
 use Code16\Sharp\Form\Eloquent\Uploads\Transformers\SharpUploadModelFormAttributeTransformer;
 use Code16\Sharp\Form\Eloquent\WithSharpFormEloquentUpdater;

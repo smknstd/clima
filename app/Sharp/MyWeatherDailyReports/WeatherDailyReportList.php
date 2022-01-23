@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Sharp\MyWeatherDailyReport;
+namespace App\Sharp\MyWeatherDailyReports;
 
 use App\Models\Media;
 use App\Models\WeatherDailyReport;
 use App\Models\WeatherStation;
-use App\Sharp\MyWeatherDailyReport\Filters\ReportDateFilterHandler;
+use App\Sharp\MyWeatherDailyReports\Filters\ReportDateFilterHandler;
 use Code16\Sharp\EntityList\Fields\EntityListField;
 use Code16\Sharp\EntityList\Fields\EntityListFieldsContainer;
 use Code16\Sharp\EntityList\Fields\EntityListFieldsLayout;

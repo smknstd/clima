@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\MyWeatherDailyReport\Filters;
+namespace App\Sharp\MyWeatherDailyReports\Filters;
 
 use Code16\Sharp\EntityList\Filters\EntityListDateRangeFilter;
 

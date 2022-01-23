@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\MyWeatherDailyReport;
+namespace App\Sharp\MyWeatherDailyReports;
 
 use Code16\Sharp\Utils\Entities\SharpEntity;
 

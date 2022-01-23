@@ -10,9 +10,10 @@ class ClimaSharpMenu extends SharpMenu
     public function build(): self
     {
         return $this
-            ->addEntityLink("member", "Mon compte", "fas fa-user")
-            ->addEntityLink("my_station", "Ma station", "fas fa-podcast")
             ->addEntityLink("my_daily_reports", "Mes relevés", "fas fa-thermometer-half")
+            ->addEntityLink("my_station", "Ma station", "fas fa-podcast")
+            ->addEntityLink("my_blogposts", "Blog", "fas fa-newspaper")
+            ->addEntityLink("my_profile", "Mon compte", "fas fa-user")
             ->addSection("Administration", function(SharpMenuItemSection $section) {
                 $section
                     ->addEntityLink("users", "Utilisateurs", "fas fa-user")

@@ -34,7 +34,7 @@ class Blogpost extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function avatar(): MorphOne
+    public function cover(): MorphOne
     {
         return $this->morphOne(Media::class, "model")
             ->where("model_key", "cover");

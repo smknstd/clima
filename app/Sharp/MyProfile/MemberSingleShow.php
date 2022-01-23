@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sharp\Member;
+namespace App\Sharp\MyProfile;
 
 use App\Models\User;
 use Code16\Sharp\Show\Fields\SharpShowPictureField;
