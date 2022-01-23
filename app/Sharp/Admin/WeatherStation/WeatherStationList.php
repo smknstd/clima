@@ -4,6 +4,7 @@ namespace App\Sharp\Admin\WeatherStation;
 
 use App\Models\WeatherDailyReport;
 use App\Models\WeatherStation;
+use Carbon\Carbon;
 use Code16\Sharp\EntityList\Fields\EntityListField;
 use Code16\Sharp\EntityList\Fields\EntityListFieldsContainer;
 use Code16\Sharp\EntityList\Fields\EntityListFieldsLayout;
@@ -24,7 +25,7 @@ class WeatherStationList extends SharpEntityList
                     ->setLabel("Lieu")
             )
             ->addField(
-                EntityListField::make("total_report_count")
+                EntityListField::make("reports")
                     ->setLabel("Relevés")
             )
             ->addField(
@@ -33,16 +34,16 @@ class WeatherStationList extends SharpEntityList
             )
             ->addField(
                 EntityListField::make("created_at")
-                    ->setLabel("Date d'ajout au site")
+                    ->setLabel("Ajout au site")
             );
     }
 
     public function buildListLayout(EntityListFieldsLayout $fieldsLayout): void
     {
         $fieldsLayout
-            ->addColumn("user", 3)
-            ->addColumn("city", 3)
-            ->addColumn("total_report_count", 1)
+            ->addColumn("user", 2)
+            ->addColumn("city", 2)
+            ->addColumn("reports", 3)
             ->addColumn("hardware_details", 3)
             ->addColumn("created_at", 2);
     }
@@ -69,14 +70,21 @@ class WeatherStationList extends SharpEntityList
             ->setCustomTransformer("created_at", function ($value, WeatherStation $weatherStation) {
                 return $weatherStation->created_at->format('d/m/Y');
             })
+            ->setCustomTransformer("reports", function ($value, WeatherStation $weatherStation) {
+                if ($result = WeatherDailyReport::selectRaw('max(date) as last_created_at, count(*) as total')->where('weather_station_id', $weatherStation->id)->first()) {
+                    return sprintf(
+                        '%s<div style="color: gray"><small>Date du dernier: %s</small></div>',
+                        $result->total,
+                        Carbon::parse($result->last_created_at)->format('d/m/Y')
+                    );
+                }
+                return '0';
+            })
             ->setCustomTransformer("user", function ($value, WeatherStation $weatherStation) {
                 return $weatherStation->user->name;
             })
             ->setCustomTransformer("city", function ($value, WeatherStation $weatherStation) {
                 return $weatherStation->city . ", " . $weatherStation->postal_code;
-            })
-            ->setCustomTransformer("total_report_count", function ($value, WeatherStation $weatherStation) {
-                return WeatherDailyReport::where('weather_station_id', $weatherStation->id)->count();
             })
             ->transform(
                 WeatherStation::orderBy('created_at', 'desc')->get()

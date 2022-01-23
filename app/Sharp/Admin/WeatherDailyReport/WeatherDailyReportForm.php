@@ -22,8 +22,6 @@ class WeatherDailyReportForm extends SharpForm
 {
     use WithSharpFormEloquentUpdater;
 
-    protected ?string $formValidatorClass = WeatherDailyReportValidator::class;
-
     function buildFormFields(FieldsContainer $formFields) : void
     {
         $formFields
@@ -54,9 +52,9 @@ class WeatherDailyReportForm extends SharpForm
                     ->setDisplayFormat("DD/MM/YYYY")
             )
             ->addField(
-                SharpFormTextField::make("min_temperature")
-                    ->setLabel("Température minimum")
-                    ->setMaxLength(6)
+                SharpFormTextareaField::make("comment")
+                    ->setLabel("Commentaire")
+                    ->setRowCount(4)
             );
     }
 
@@ -66,7 +64,7 @@ class WeatherDailyReportForm extends SharpForm
             ->addColumn(6, function(FormLayoutColumn $column) {
                 $column
                     ->withFields("date")
-                    ->withFields("min_temperature");
+                    ->withFields("comment");
             })
             ->addColumn(6, function(FormLayoutColumn $column) {
                 $column
@@ -85,7 +83,6 @@ class WeatherDailyReportForm extends SharpForm
     {
         return $this
             ->setCustomTransformer("visuals", new SharpUploadModelFormAttributeTransformer())
-            ->setCustomTransformer("min_temperature", new FloatValueFromStorageFormAttributeTransformer())
             ->transform(WeatherDailyReport::with('visuals')->findOrFail($id));
     }
 
@@ -97,9 +94,7 @@ class WeatherDailyReportForm extends SharpForm
                 "weather_station_id" => auth()->id(), //@todo
             ]);
 
-        $this
-            ->setCustomTransformer("min_temperature", new FloatValueToStorageFormAttributeTransformer())
-            ->save($report, $data);
+        $this->save($report, $data);
 
         return $report->id;
     }

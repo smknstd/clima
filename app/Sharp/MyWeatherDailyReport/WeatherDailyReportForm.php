@@ -90,13 +90,13 @@ class WeatherDailyReportForm extends SharpForm
             ->addField(
                 SharpFormTextField::make("sunshine_duration")
                     ->setLabel("Insolation")
-                    ->setMaxLength(2)
+                    ->setMaxLength(4)
                     ->setHelpMessage('en nombre d\'heures')
             )
             ->addField(
                 SharpFormTextField::make("snow_depth")
                     ->setLabel("Epaisseur de neige")
-                    ->setMaxLength(2)
+                    ->setMaxLength(4)
                     ->setHelpMessage('en mm')
             )
             ->addField(
@@ -201,6 +201,9 @@ class WeatherDailyReportForm extends SharpForm
         return $this
             ->setCustomTransformer("visuals", new SharpUploadModelFormAttributeTransformer())
             ->setCustomTransformer("min_temperature", new FloatValueFromStorageFormAttributeTransformer())
+            ->setCustomTransformer("max_temperature", new FloatValueFromStorageFormAttributeTransformer())
+            ->setCustomTransformer("avg_wind_speed", new FloatValueFromStorageFormAttributeTransformer())
+            ->setCustomTransformer("max_wind_speed", new FloatValueFromStorageFormAttributeTransformer())
             ->transform(WeatherDailyReport::with('visuals')->findOrFail($id));
     }
 
@@ -214,6 +217,9 @@ class WeatherDailyReportForm extends SharpForm
 
         $this
             ->setCustomTransformer("min_temperature", new FloatValueToStorageFormAttributeTransformer())
+            ->setCustomTransformer("max_temperature", new FloatValueToStorageFormAttributeTransformer())
+            ->setCustomTransformer("avg_wind_speed", new FloatValueToStorageFormAttributeTransformer())
+            ->setCustomTransformer("max_wind_speed", new FloatValueToStorageFormAttributeTransformer())
             ->save($report, $data);
 
         return $report->id;

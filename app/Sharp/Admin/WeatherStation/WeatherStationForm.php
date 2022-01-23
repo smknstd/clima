@@ -88,7 +88,6 @@ class WeatherStationForm extends SharpForm
         $formLayout
             ->addColumn(6, function(FormLayoutColumn $column) {
                 $column
-                    ->withFields("name")
                     ->withFields("description")
                     ->withFields("creation_date")
                     ->withFields("hardware_details")
