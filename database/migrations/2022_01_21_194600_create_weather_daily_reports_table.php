@@ -26,9 +26,10 @@ class CreateWeatherDailyReportsTable extends Migration
             $table->smallInteger('max_pressure')->nullable();
             $table->smallInteger('precipitation')->nullable();
             $table->smallInteger('sunshine_duration')->nullable();
+            $table->smallInteger('snow_depth')->nullable();
             $table->string('wind_direction')->nullable();
-            $table->string('avg_wind_speed')->nullable();
-            $table->string('max_wind_speed')->nullable();
+            $table->smallInteger('avg_wind_speed')->nullable();
+            $table->smallInteger('max_wind_speed')->nullable();
 
             $table->boolean('has_rain')->default(false);
             $table->boolean('has_storm')->default(false);

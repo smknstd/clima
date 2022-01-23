@@ -18,9 +18,10 @@ enum UserRole: string
 
     public static function getAllRolesAsArray(): array
     {
-        return [
-            self::USER->value => self::USER->label(),
-            self::ADMIN->value => self::ADMIN->label(),
-        ];
+        $array = [];
+        foreach (self::cases() as $enum) {
+            $array[$enum->value] = $enum->label();
+        }
+        return $array;
     }
 }

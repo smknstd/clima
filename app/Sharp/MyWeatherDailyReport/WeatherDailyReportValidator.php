@@ -30,6 +30,7 @@ class WeatherDailyReportValidator extends SharpFormRequest
     public function messages()
     {
         return [
+            "date.required" => "La date du relevé est obligatoire",
             "min_temperature.numeric" => "Désolé, cela ne correspond pas au format attendu. Veuillez saisir une température en °c en utilisant le \".\" et non pas une \",\" s'il y a une décimale.",
             "min_temperature.min" => "La température doit être supérieure à -40°c",
             "min_temperature.max" => "La température doit être inférieure à 55°c",

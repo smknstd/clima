@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Enums\WindDirection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class WeatherDailyReportFactory extends Factory
@@ -22,7 +23,7 @@ class WeatherDailyReportFactory extends Factory
         'max_pressure' => 1210,
         'precipitation' => 1210,
         'sunshine_duration' => 1210,
-        'wind_direction' => 1210,
+        'wind_direction' => WindDirection::ENE,
         'avg_wind_speed' => 1210,
         'max_wind_speed' => 1210,
         'has_rain' => false,
