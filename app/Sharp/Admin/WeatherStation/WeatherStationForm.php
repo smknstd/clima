@@ -11,8 +11,10 @@ use Code16\Sharp\Form\Fields\SharpFormTextField;
 use Code16\Sharp\Form\Fields\SharpFormUploadField;
 use Code16\Sharp\Form\Layout\FormLayout;
 use Code16\Sharp\Form\Layout\FormLayoutColumn;
+use Code16\Sharp\Form\Layout\FormLayoutFieldset;
 use Code16\Sharp\Form\SharpForm;
 use Code16\Sharp\Utils\Fields\FieldsContainer;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 
 class WeatherStationForm extends SharpForm
 {
@@ -54,6 +56,16 @@ class WeatherStationForm extends SharpForm
                     ->setMaxLength(5)
             )
             ->addField(
+                SharpFormTextField::make("lat")
+                    ->setLabel("Latitude")
+                    ->setHelpMessage('Ex: 40.7484404')
+            )
+            ->addField(
+                SharpFormTextField::make("lng")
+                    ->setLabel("Longitude")
+                    ->setHelpMessage('Ex: -73.9878441')
+            )
+            ->addField(
                 SharpFormTextField::make("altitude")
                     ->setLabel("Altitude")
                     ->setMaxLength(4)
@@ -91,10 +103,13 @@ class WeatherStationForm extends SharpForm
                     ->withFields("description")
                     ->withFields("creation_date")
                     ->withFields("hardware_details")
-                    ->withFields("city")
-                    ->withFields("postal_code")
-                    ->withFields("altitude")
-                    ->withFields("website_url");
+                    ->withFields("website_url")
+                    ->withFieldset("Localité", function(FormLayoutFieldset $fieldset) {
+                        return $fieldset
+                            ->withFields("postal_code|3", "city|9")
+                            ->withFields("lat|6", "lng|6")
+                            ->withFields("altitude|2");
+                    });
             })
             ->addColumn(6, function(FormLayoutColumn $column) {
                 $column
@@ -120,6 +135,12 @@ class WeatherStationForm extends SharpForm
     function find($id): array
     {
         return $this
+            ->setCustomTransformer("lat", function($value, WeatherStation $weatherStation) {
+                return $weatherStation->city_geo_position?->getLat();
+            })
+            ->setCustomTransformer("lng", function($value, WeatherStation $weatherStation) {
+                return $weatherStation->city_geo_position?->getLng();
+            })
             ->setCustomTransformer("visuals", new SharpUploadModelFormAttributeTransformer())
             ->transform(WeatherStation::with('visuals')->findOrFail($id));
     }
@@ -131,6 +152,12 @@ class WeatherStationForm extends SharpForm
             : new WeatherStation([
                 "user_id" => auth()->id(),
             ]);
+
+        if ($data['lat']) {
+            $data['city_geo_position'] = new Point($data['lat'], $data['lng']);
+        }
+        unset($data['lat']);
+        unset($data['lng']);
 
         $this->save($station, $data);
 

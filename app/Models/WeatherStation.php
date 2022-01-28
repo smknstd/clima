@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WeatherStation extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, SpatialTrait;
 
     /**
      * The attributes that should be cast.
@@ -23,6 +24,10 @@ class WeatherStation extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+    ];
+
+    protected $spatialFields = [
+        'city_geo_position',
     ];
 
     public function user(): BelongsTo

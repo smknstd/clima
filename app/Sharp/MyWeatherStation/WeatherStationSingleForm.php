@@ -11,6 +11,7 @@ use Code16\Sharp\Form\Fields\SharpFormTextField;
 use Code16\Sharp\Form\Fields\SharpFormUploadField;
 use Code16\Sharp\Form\Layout\FormLayout;
 use Code16\Sharp\Form\Layout\FormLayoutColumn;
+use Code16\Sharp\Form\Layout\FormLayoutFieldset;
 use Code16\Sharp\Form\SharpForm;
 use Code16\Sharp\Form\SharpSingleForm;
 use Code16\Sharp\Utils\Fields\FieldsContainer;
@@ -92,10 +93,11 @@ class WeatherStationSingleForm extends SharpSingleForm
                     ->withFields("description")
                     ->withFields("creation_date")
                     ->withFields("hardware_details")
-                    ->withFields("city")
-                    ->withFields("postal_code")
-                    ->withFields("altitude")
-                    ->withFields("website_url");
+                    ->withFields("website_url")
+                    ->withFieldset("Localité", function(FormLayoutFieldset $fieldset) {
+                        return $fieldset
+                            ->withFields("postal_code|3", "city|7", "altitude|2");
+                    });
             })
             ->addColumn(6, function(FormLayoutColumn $column) {
                 $column

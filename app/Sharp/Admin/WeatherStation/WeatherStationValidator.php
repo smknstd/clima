@@ -36,6 +36,16 @@ class WeatherStationValidator extends SharpFormRequest
             "website_url" => [
                 "max:300",
             ],
+            "lat" => [
+                "required_with:lng",
+                "nullable",
+                "numeric"
+            ],
+            "lng" => [
+                "required_with:lat",
+                "nullable",
+                "numeric"
+            ],
         ];
     }
 }

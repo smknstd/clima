@@ -12,8 +12,8 @@ class ReportDateFilterHandler extends EntityListDateRangeFilter
             ->configureLabel("Date")
             ->configureKey("report_date")
             ->configureRetainInSession()
-            ->configureDateFormat("YYYY-MM-DD")
-            ->configureMondayFirst(false);
+            ->configureDateFormat("DD/MM/YYYY")
+            ->configureMondayFirst(true);
     }
 
 

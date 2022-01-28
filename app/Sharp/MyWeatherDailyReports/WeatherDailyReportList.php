@@ -73,13 +73,12 @@ class WeatherDailyReportList extends SharpEntityList
             foreach ($this->queryParams->searchWords() as $word) {
                 $reports->where(function ($query) use ($word) {
                     $query
-//                        ->where('last_name', 'like', $word)
                         ->orWhere('comment', 'like', $word);
                 });
             }
         }
 
-        if ($date = $this->queryParams->filterFor("report_date")) {
+        if ($date = $this->queryParams->filterFor(ReportDateFilterHandler::class)) {
             $reports->whereBetween('date', [
                 $date['start'],
                 $date['end'],

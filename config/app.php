@@ -166,6 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Grimzy\LaravelMysqlSpatial\SpatialServiceProvider::class,
 
         /*
          * Application Service Providers...
