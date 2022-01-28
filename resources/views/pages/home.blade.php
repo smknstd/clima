@@ -1,6 +1,6 @@
 <x-layout class="home">
     <x-slot name="title">
-        Titi
+        {{ $title }}
     </x-slot>
 
     <x-slot name="meta_title">
@@ -21,27 +21,33 @@
 
     <x-slot name="content">
 
-        <section>
-            <div class="relative items-center w-full px-5 py-12 mx-auto md:px-12 lg:px-24 max-w-7xl">
-                <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-3">
-
-                    <div class="p-6">
-                        <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl"
-                             src="https://d33wubrfki0l68.cloudfront.net/89984e38d378089d8d7b47935660ae475a226df7/f6d8b/images/placeholders/sqaurecard.svg"
-                             alt="blog">
-                        <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
-                            Short headline.
-                        </h1>
-                        <p class="mx-auto text-base leading-relaxed text-gray-500">
-                            Free and Premium themes, UI Kit's, templates and landing pages built with Tailwind CSS, HTML &amp; Next.js.
-                        </p>
-                        <div class="mt-4">
-                            <a href="#" class="inline-flex items-center mt-4 font-semibold text-blue-600 lg:mb-0 hover:text-neutral-600" title="read more">
-                                Read More »
-                            </a>
+        <section class="text-gray-600 body-font">
+            <div class="container px-5 py-24 mx-auto">
+                <div class="flex flex-wrap -m-4">
+                    @foreach($lastBlogposts as $blogpost)
+                    <div class="p-4 md:w-1/3">
+                        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                            <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="{{ $blogpost->cover->thumbnail(700) }}" alt="blog">
+                            <div class="p-6">
+                                <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">{{ Str::upper($blogpost->type->label()) }}</h2>
+                                <h1 class="title-font text-lg font-medium text-gray-900 mb-3">{{ $blogpost->title }}</h1>
+                                <div class="flex items-center flex-wrap ">
+                                    <img alt="testimonial" src="{{ $blogpost->user->avatar->thumbnail(40) }}" class="w-10 h-10 rounded-full flex-shrink-0 object-cover object-center">
+                                    <span class="flex-grow flex flex-col pl-4">
+                                      <span class="title-font font-medium text-sm text-gray-900">Holden Caulfield</span>
+                                      <span class="text-gray-500 text-xs">
+                                          {{ $blogpost->published_at->isoFormat('Do MMM YYYY') }}
+                                          @if(!$blogpost->isSinglePhoto())
+                                            <span class="bull">•</span>
+                                            Lecture {{ $blogpost->getReadingTime() }}
+                                          @endif
+                                      </span>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    @endforeach
                 </div>
             </div>
         </section>

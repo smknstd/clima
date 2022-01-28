@@ -32,6 +32,16 @@ class Blogpost extends Model
         'published_at',
     ];
 
+    public function isSinglePhoto(): bool
+    {
+        return $this->type === BlogpostType::SINGLE_PHOTO;
+    }
+
+    public function getReadingTime(): string
+    {
+        return "3 min";
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
