@@ -22,7 +22,7 @@ class BlogpostFactory extends Factory
             'state' => BlogpostState::PUBLISHED,
             'type' => BlogpostType::NEWS,
             'content' => "Super, excellent !",
-            'published_at' => Carbon::yesterday(),
+            'published_at' => Carbon::now(),
         ];
     }
 }

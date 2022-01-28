@@ -52,6 +52,7 @@ class BlogpostList extends SharpEntityList
     public function buildListConfig(): void
     {
         $this
+            ->configureMultiformAttribute("blogpost_type")
             ->configureEntityState("blogpost_state", new BlogpostStateHandler())
             ->configureSearchable()
             ->configurePaginated();
@@ -73,6 +74,9 @@ class BlogpostList extends SharpEntityList
 
 
         return $this
+            ->setCustomTransformer("blogpost_type", function($value, Blogpost $post) {
+                return $post->type->value;
+            })
             ->setCustomTransformer("type", function ($value, Blogpost $post) {
                 return $post->type->label();
             })

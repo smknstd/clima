@@ -190,10 +190,10 @@ class WeatherDailyReportForm extends SharpForm
 
     public function buildFormConfig(): void
     {
-        $this->configurePageAlert(
-            "Vous allez saisir un relevé méteo journalier.",
-            static::$pageAlertLevelInfo
-        );
+//        $this->configurePageAlert(
+//            "Vous allez saisir un relevé méteo journalier.",
+//            static::$pageAlertLevelInfo
+//        );
     }
 
     function find($id): array

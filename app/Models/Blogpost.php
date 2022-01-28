@@ -14,6 +14,8 @@ class Blogpost extends Model
 {
     use HasFactory, HasTags;
 
+    protected $guarded = [];
+
     /**
      * The attributes that should be cast.
      *
@@ -27,6 +29,7 @@ class Blogpost extends Model
     protected $dates = [
         'created_at',
         'updated_at',
+        'published_at',
     ];
 
     public function user(): BelongsTo

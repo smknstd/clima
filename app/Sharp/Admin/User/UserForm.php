@@ -2,12 +2,8 @@
 
 namespace App\Sharp\Admin\User;
 
-use App\Models\Enums\FederationEnum;
-use App\Models\Enums\OrganizationTypeEnum;
-use App\Models\Enums\StateEnum;
 use App\Models\Enums\UserRole;
 use App\Models\User;
-use App\Sharp\User\Transformers\UserRolesTransformer;
 use Code16\Sharp\Form\Eloquent\Uploads\Transformers\SharpUploadModelFormAttributeTransformer;
 use Code16\Sharp\Form\Eloquent\WithSharpFormEloquentUpdater;
 use Code16\Sharp\Form\Fields\SharpFormSelectField;
@@ -19,7 +15,6 @@ use Code16\Sharp\Form\Layout\FormLayoutColumn;
 use Code16\Sharp\Form\SharpForm;
 use Code16\Sharp\Utils\Fields\FieldsContainer;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
 use Spatie\Tags\Tag;
 
 class UserForm extends SharpForm
@@ -128,6 +123,10 @@ class UserForm extends SharpForm
 
     public function delete($id): void
     {
-        Tag::find($id)->delete();
+        /** @var User $user */
+        $user = User::findOrFail($id);
+
+        $user->logout(); //@todo does it work ?
+        $user->delete();
     }
 }
