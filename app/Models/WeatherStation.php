@@ -42,6 +42,11 @@ class WeatherStation extends Model
             ->orderBy("order");
     }
 
+    public function getTitleBasedOnLocation() : string
+    {
+        return $this->city . " (" . $this->postal_code . ")";
+    }
+
     public function getDefaultAttributesFor(string $attribute): array
     {
         return in_array($attribute, ["visuals"])

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StationController;
+use App\Http\Controllers\StationsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
+
+Route::get('/stations', [StationsController::class, 'index'])
+    ->name('stations');
+
+Route::get('/station/{station}', [StationController::class, 'show'])
+    ->name('station');
