@@ -7,10 +7,6 @@
         Titi
     </x-slot>
 
-    <x-slot name="meta_type">
-        Titi
-    </x-slot>
-
     <x-slot name="meta_description">
         Titi
     </x-slot>

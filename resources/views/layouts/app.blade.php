@@ -9,12 +9,18 @@
 
         <meta name="description" content="{{ $meta_description }}">
 
+        <meta property="og:type" content="website" />
         <meta property="og:title" content="{{ $meta_title }}">
-        <meta property="og:type" content="{{ $meta_type }}" />
         <meta property="og:description" content="{{ $meta_description }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:site_name" content="CLI.M.A.">
         <meta property="og:image" content="{{ $meta_image }}">
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="{{ $meta_title }}">
+        <meta property="twitter:description" content="{{ $meta_description }}">
+        <meta property="twitter:url" content="{{ url()->current() }}">
+        <meta property="twitter:image" content="{{ $meta_image }}">
 
         <link rel="canonical" href="{{ rtrim(request()->fullUrlWithQuery(['page' => null]), '?') }}">
 
