@@ -14,7 +14,6 @@ class HomeController extends Controller
             ->get();
 
         return view('pages.home', [
-            'title' => 'Titre toto',
             "lastBlogposts" => $lastblogposts,
         ]);
     }

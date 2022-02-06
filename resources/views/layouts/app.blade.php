@@ -19,8 +19,7 @@
         <link rel="canonical" href="{{ rtrim(request()->fullUrlWithQuery(['page' => null]), '?') }}">
 
         <link rel="icon" href="/favicon.ico">
-        <link rel="icon" href="{{ asset('/img/favicons/favicon-32x32.png') }}" type="image/png" sizes="32x32">
-        <link rel="apple-touch-icon" href="{{ asset('/img/favicons/apple-icon-180x180.png') }}">
+        <link rel="icon" href="{{ asset('/img/favicons/favicon.png') }}" type="image/png" sizes="64x64">
         <link rel="manifest" href="{{ asset('/img/favicons/manifest.json') }}">
 
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">

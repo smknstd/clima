@@ -1,6 +1,6 @@
 <x-layout class="home">
     <x-slot name="title">
-        {{ $title }}
+        Titre toto
     </x-slot>
 
     <x-slot name="meta_title">
@@ -16,7 +16,7 @@
     </x-slot>
 
     <x-slot name="meta_image">
-        asset('/img/favicons/favicon-32x32.png')
+        asset('/img/metas/home.jpg')
     </x-slot>
 
     <x-slot name="content">
