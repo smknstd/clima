@@ -19,31 +19,35 @@
 
         <section class="text-gray-600 body-font">
             <div class="container px-5 py-24 mx-auto">
-                <div class="flex flex-wrap -m-4">
-                    @foreach($lastBlogposts as $blogpost)
-                    <div class="p-4 md:w-1/3">
-                        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                            <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="{{ $blogpost->cover->thumbnail(700) }}" alt="blog">
-                            <div class="p-6">
-                                <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">{{ Str::upper($blogpost->type->label()) }}</h2>
-                                <h1 class="title-font text-lg font-medium text-gray-900 mb-3">{{ $blogpost->title }}</h1>
-                                <div class="flex items-center flex-wrap ">
-                                    <img alt="testimonial" src="{{ $blogpost->user->avatar->thumbnailFit(40, 40) }}" class="w-10 h-10 rounded-full flex-shrink-0 object-cover object-center">
-                                    <span class="flex-grow flex flex-col pl-4">
-                                      <span class="title-font font-medium text-sm text-gray-900">{{ $blogpost->user->name }}</span>
-                                      <span class="text-gray-500 text-xs">
-                                          {{ $blogpost->published_at->isoFormat('Do MMM YYYY') }}
-                                          @if(!$blogpost->isSinglePhoto())
-                                            <span class="bull">•</span>
-                                            Lecture {{ $blogpost->getReadingTime() }}
-                                          @endif
-                                      </span>
-                                    </span>
-                                </div>
-                            </div>
+
+                <section class="text-gray-600 body-font">
+                    <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+                        <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+                            <img class="object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600">
+                        </div>
+                        <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+                            <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Before they sold out
+                                <br class="hidden lg:inline-block">readymade gluten
+                            </h1>
+                            <p class="mb-8 leading-relaxed">Copper mug try-hard pitchfork pour-over freegan heirloom neutra air plant cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken authentic tumeric truffaut hexagon try-hard chambray.</p>
                         </div>
                     </div>
+                </section>
+
+                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Derniers posts du blog</h1>
+                <div class="flex flex-wrap -m-4">
+                    @foreach($lastBlogposts as $blogpost)
+                        <x-blogpost :blogpost="$blogpost" />
                     @endforeach
+                </div>
+                <div class="inline-flex my-4">
+                    <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0" href="{{ route('blog') }}">
+                        Voir le blog
+                        <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M5 12h14"></path>
+                          <path d="M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </section>
