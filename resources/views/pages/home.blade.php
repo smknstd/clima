@@ -16,7 +16,7 @@
     </x-slot>
 
     <x-slot name="meta_image">
-        asset('/img/metas/home.jpg')
+        {{ asset('/img/metas/home.jpg') }}
     </x-slot>
 
     <x-slot name="content">
