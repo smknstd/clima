@@ -28,6 +28,8 @@
         <link rel="icon" href="{{ asset('/img/favicons/favicon.png') }}" type="image/png" sizes="64x64">
         <link rel="manifest" href="{{ asset('/img/favicons/manifest.json') }}">
 
+        <link rel="stylesheet" href="{{ asset('css/weather-icons.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/weather-icons-wind.min.css') }}">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>

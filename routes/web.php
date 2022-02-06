@@ -5,6 +5,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StationController;
 use App\Http\Controllers\StationsController;
+use App\Http\Controllers\WeatherDailyReportsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,3 +33,6 @@ Route::get('/stations', [StationsController::class, 'index'])
 
 Route::get('/station/{station}', [StationController::class, 'show'])
     ->name('station');
+
+Route::get('/releves', [WeatherDailyReportsController::class, 'index'])
+    ->name('reports');
