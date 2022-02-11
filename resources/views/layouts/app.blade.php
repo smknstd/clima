@@ -30,6 +30,7 @@
 
         <link rel="stylesheet" href="{{ asset('css/weather-icons.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/weather-icons-wind.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/hint.min.css') }}">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>

@@ -25,6 +25,10 @@ Route::get('/', [HomeController::class, 'index'])
 Route::get('/blog', [BlogController::class, 'index'])
     ->name('blog');
 
+Route::get('/blog/new/{type}', function(\App\Models\Enums\BlogpostType $type) {
+    dd($type);
+});
+
 Route::get('/a-propos', [AboutController::class, 'index'])
     ->name('about');
 

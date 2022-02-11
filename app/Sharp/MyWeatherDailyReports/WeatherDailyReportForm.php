@@ -123,7 +123,7 @@ class WeatherDailyReportForm extends SharpForm
                 SharpFormCheckField::make("has_rain",'Pluie')
             )
             ->addField(
-                SharpFormCheckField::make("has_storm",'Orage')
+                SharpFormCheckField::make("has_storm",'Orage (tonnerre perçu)')
             )
             ->addField(
                 SharpFormCheckField::make("has_hail",'Grêle')

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Carbon;
+
 function format_report_value_from_storage($value, $precision = 2, $unit = null) : string
 {
     if(!$value) {
@@ -8,20 +10,35 @@ function format_report_value_from_storage($value, $precision = 2, $unit = null) 
     return round(number_format($value/100, 2, ".", ""), $precision) . ($unit ? " " . $unit : "");
 }
 
-function get_bg_temperature($temperature)
+function get_bg_temperature(string $type, int $temperature, Carbon $date)
 {
-    $roundedTemperature = (int)(ceil( round($temperature/100) / 5 ) * 5);
+    $roundedTemperature = (int) round($temperature/100);
 
-    return match($roundedTemperature) {
-        -40, -35, -30, -25, -20, -15 => "bg-blue-800",
-        -10 => "bg-blue-600",
-        -5 => "bg-blue-400",
-        0 => "bg-blue-200",
-        5 => "bg-red-200",
-        10 => "bg-red-400",
-        15 => "bg-red-600",
-        20 => "bg-red-700",
-        25 => "bg-red-800",
-        30, 35, 40, 45, 50, 55 => "bg-red-900",
+    $seasonal = ($type === 'max') ? [
+        5,7,11,16,20,23,25,25,21,15,9,5
+    ] : [
+        -1,0,2,5,10,13,14,14,11,7,3,0
+    ];
+
+    $diff = $roundedTemperature - $seasonal[((int)$date->format('m')) - 1];
+
+    return match($diff) {
+        -15,-16,-17,-18,-19,-20,-21,-22,-23,-24,-25 => 'light-blue-700',
+        -13,-14 => 'light-blue-600',
+        -11,-12 => 'light-blue-500',
+        -9,-10 => 'light-blue-400',
+        -7,-8 => 'light-blue-300',
+        -5,-6 => 'light-blue-200',
+        -3,-4 => 'light-blue-100',
+        -1,-2 => 'light-blue-50',
+        0 => 'grey-50',
+        1,2 => 'orange-50',
+        3,4 => 'orange-100',
+        5,6 => 'orange-200',
+        7,8 => 'orange-300',
+        9,10 => 'orange-400',
+        11,12 => 'orange-500',
+        13,14 => 'orange-600',
+        15,16,17,18,19,20,21,22,23,24,25 => 'orange-700',
     };
 }
