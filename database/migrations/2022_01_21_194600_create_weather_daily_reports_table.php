@@ -37,10 +37,13 @@ class CreateWeatherDailyReportsTable extends Migration
             $table->boolean('has_snow')->default(false);
             $table->boolean('has_fog')->default(false);
             $table->boolean('has_flood')->default(false);
+            $table->boolean('has_glaze')->default(false);
 
             $table->string('comment')->nullable();
 
             $table->timestamps();
+
+            $table->index('date');
 
             $table->unique([
                 'weather_station_id', 'date'

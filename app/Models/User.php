@@ -70,6 +70,14 @@ class User extends Authenticatable
         return $this->role === UserRole::ADMIN;
     }
 
+    public function getAvatarThumbnail($size = 40)
+    {
+        if($this->avatar) {
+            return $this->avatar->thumbnailFit($size, $size);
+        }
+        return asset('/img/default-avatar.jpg');
+    }
+
     public function getDefaultAttributesFor(string $attribute): array
     {
         return in_array($attribute, ["avatar"])

@@ -10,6 +10,14 @@ function format_report_value_from_storage($value, $precision = 2, $unit = null) 
     return round(number_format($value/100, 2, ".", ""), $precision) . ($unit ? " " . $unit : "");
 }
 
+function format_report_value_in_cm_from_storage($value) : string
+{
+    if(!$value) {
+        return "";
+    }
+    return round(number_format($value/10, 2, ".", ""), 1) . " cm";
+}
+
 function get_bg_temperature(string $type, int $temperature, Carbon $date)
 {
     $roundedTemperature = (int) round($temperature/100);
@@ -23,6 +31,7 @@ function get_bg_temperature(string $type, int $temperature, Carbon $date)
     $diff = $roundedTemperature - $seasonal[((int)$date->format('m')) - 1];
 
     return match($diff) {
+        default => 'grey-50',
         -15,-16,-17,-18,-19,-20,-21,-22,-23,-24,-25 => 'light-blue-700',
         -13,-14 => 'light-blue-600',
         -11,-12 => 'light-blue-500',

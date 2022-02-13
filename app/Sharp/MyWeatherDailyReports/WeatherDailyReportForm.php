@@ -132,6 +132,9 @@ class WeatherDailyReportForm extends SharpForm
                 SharpFormCheckField::make("has_snow",'Neige')
             )
             ->addField(
+                SharpFormCheckField::make("has_glaze",'Verglas')
+            )
+            ->addField(
                 SharpFormCheckField::make("has_fog",'Brouillard')
             )
             ->addField(
@@ -177,6 +180,7 @@ class WeatherDailyReportForm extends SharpForm
                             ->withFields("has_storm")
                             ->withFields("has_hail")
                             ->withFields("has_snow")
+                            ->withFields("has_glaze")
                             ->withFields("has_fog")
                             ->withFields("has_flood");
                     })
@@ -196,6 +200,13 @@ class WeatherDailyReportForm extends SharpForm
 //        );
     }
 
+    public function create(): array
+    {
+        return [
+            'date' => today(),
+        ];
+    }
+
     function find($id): array
     {
         return $this
@@ -212,7 +223,7 @@ class WeatherDailyReportForm extends SharpForm
         $report = $id
             ? WeatherDailyReport::findOrFail($id)
             : new WeatherDailyReport([
-                "weather_station_id" => auth()->id(), //@todo
+                "weather_station_id" => auth()->user()->weatherStation->id,
             ]);
 
         $this

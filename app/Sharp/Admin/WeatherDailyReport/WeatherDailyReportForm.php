@@ -88,11 +88,7 @@ class WeatherDailyReportForm extends SharpForm
 
     function update($id, array $data)
     {
-        $report = $id
-            ? WeatherDailyReport::findOrFail($id)
-            : new WeatherDailyReport([
-                "weather_station_id" => auth()->id(), //@todo
-            ]);
+        $report = WeatherDailyReport::findOrFail($id);
 
         $this->save($report, $data);
 

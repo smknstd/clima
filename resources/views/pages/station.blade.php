@@ -12,7 +12,7 @@
     </x-slot>
 
     <x-slot name="meta_image">
-        {{ $station->visuals->first()->thumbnail(1200,627) }}
+        {{ $station->visuals ? $station->visuals->first()->thumbnail(1200,627) : asset('/img/metas/stations.jpg') }}
     </x-slot>
 
     <x-slot name="content">
@@ -37,6 +37,15 @@
                 </div>
                 <div class="flex flex-col flex-wrap lg:py-6 -mb-10 lg:w-1/2 lg:pl-12 lg:text-left text-center mx-auto">
                     <div class="flex flex-col mb-10 lg:items-start items-center">
+                        <div class="flex-grow py-2">
+                            <h2 class="text-gray-900 text-lg title-font font-medium mb-1">Propriétaire</h2>
+                            <div class="flex items-center flex-wrap ">
+                                <img alt="testimonial" src="{{ $station->user->getAvatarThumbnail() }}" class="w-10 h-10 rounded-full flex-shrink-0 object-cover object-center">
+                                <span class="flex-grow flex flex-col pl-4">
+                                      <span class="title-font font-medium text-sm text-gray-900">{{ $station->user->name }}</span>
+                                </span>
+                            </div>
+                        </div>
                         @if($station->creation_date)
                         <div class="flex-grow py-2">
                             <h2 class="text-gray-900 text-lg title-font font-medium mb-1">Date de mise en service</h2>
@@ -62,12 +71,16 @@
                             </div>
                         @endif
                         <div class="flex-grow py-2">
-                            <h2 class="text-gray-900 text-lg title-font font-medium mb-1">Propriétaire</h2>
-                            <div class="flex items-center flex-wrap ">
-                                <img alt="testimonial" src="{{ $station->user->avatar->thumbnailFit(40, 40) }}" class="w-10 h-10 rounded-full flex-shrink-0 object-cover object-center">
-                                <span class="flex-grow flex flex-col pl-4">
-                                      <span class="title-font font-medium text-sm text-gray-900">{{ $station->user->name }}</span>
-                                </span>
+                            <h2 class="text-gray-900 text-lg title-font font-medium mb-1">Nombre de relevés</h2>
+                            <p class="leading-relaxed text-base">{{ $report_count }}</p>
+                            <div class="inline-flex">
+                                <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0" href="{{ route('station-monthly-reports', [$station, today()->format('Y'), today()->format('m')]) }}">
+                                    Voir les derniers relevés
+                                    <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                      <path d="M5 12h14"></path>
+                                      <path d="M12 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     </div>

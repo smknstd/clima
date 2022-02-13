@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\WeatherDailyReport;
 use App\Models\WeatherStation;
 
 class StationsController extends Controller

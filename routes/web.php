@@ -4,6 +4,8 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StationController;
+use App\Http\Controllers\StationMonthlyStatisticsController;
+use App\Http\Controllers\StationMonthlyWeatherReportsController;
 use App\Http\Controllers\StationsController;
 use App\Http\Controllers\WeatherDailyReportsController;
 use Illuminate\Support\Facades\Route;
@@ -25,10 +27,6 @@ Route::get('/', [HomeController::class, 'index'])
 Route::get('/blog', [BlogController::class, 'index'])
     ->name('blog');
 
-Route::get('/blog/new/{type}', function(\App\Models\Enums\BlogpostType $type) {
-    dd($type);
-});
-
 Route::get('/a-propos', [AboutController::class, 'index'])
     ->name('about');
 
@@ -37,6 +35,12 @@ Route::get('/stations', [StationsController::class, 'index'])
 
 Route::get('/station/{station}', [StationController::class, 'show'])
     ->name('station');
+
+Route::get('/station/{station}/releves/{year}/{month}', [StationMonthlyWeatherReportsController::class, 'show'])
+    ->name('station-monthly-reports');
+
+Route::get('/station/{station}/statistics/{year}/{month}', [StationMonthlyStatisticsController::class, 'show'])
+    ->name('station-monthly-statistics');
 
 Route::get('/releves', [WeatherDailyReportsController::class, 'index'])
     ->name('reports');
