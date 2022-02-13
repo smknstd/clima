@@ -22,9 +22,6 @@ class NewsValidator extends SharpFormRequest
             "content" => [
                 "required",
             ],
-            "cover" => [
-                "required",
-            ],
         ];
     }
 }

@@ -27,7 +27,7 @@
     <tbody class="bg-white divide-y divide-gray-200">
     @foreach($reports as $report)
         <tr>
-            <td class="pl-3 py-4 whitespace-nowrap font-medium">
+            <td class="pl-3 py-4 whitespace-nowrap font-medium bg-gray-100">
                 @if($type === 'monthly')
                     {{ ucfirst($report->date->isoFormat('ddd D')) }}
                 @else

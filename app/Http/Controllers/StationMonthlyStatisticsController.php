@@ -14,17 +14,17 @@ class StationMonthlyStatisticsController extends Controller
         $start = CarbonImmutable::createFromDate($year,$month,1)->startOfDay();
         $end = $start->endOfMonth();
 
-        $exists = DB::table('weather_daily_reports')
+        $hasReports = DB::table('weather_daily_reports')
             ->where('weather_station_id', $station->id)
             ->where("date", '>=', $start)
             ->where("date", '<=', $end)
             ->exists();
 
-        if(!$exists) {
+        if(!$hasReports) {
             return view('pages.station-monthly-statistics', [
-                "start_date" => $start,
+                "start" => $start,
                 "station" => $station,
-                "empty" => true,
+                "hasReports" => false,
             ]);
         }
 
@@ -142,15 +142,6 @@ class StationMonthlyStatisticsController extends Controller
             ->where("date", '<=', $end)
             ->first();
 
-        $countDaysWithPrecipitation = DB::table('weather_daily_reports')
-            ->selectRaw('count(*) as count_days_with_precipitation')
-            ->whereNotNull('precipitation')
-            ->where("precipitation", '>=', 0)
-            ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
-            ->first();
-
         $countDaysWithPrecipitationOver1 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_precipitation_over_1')
             ->whereNotNull('precipitation')
@@ -193,9 +184,16 @@ class StationMonthlyStatisticsController extends Controller
             ->where("date", '<=', $end)
             ->get();
 
+        $countDaysWithRain = DB::table('weather_daily_reports')
+            ->selectRaw('count(*) as count_days_with_rain')
+            ->where("has_rain", 1)
+            ->where('weather_station_id', $station->id)
+            ->where("date", '>=', $start)
+            ->where("date", '<=', $end)
+            ->first();
+
         $countDaysWithSnow = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_snow')
-            ->whereNotNull('precipitation')
             ->where("has_snow", 1)
             ->where('weather_station_id', $station->id)
             ->where("date", '>=', $start)
@@ -203,8 +201,7 @@ class StationMonthlyStatisticsController extends Controller
             ->first();
 
         $countDaysWithHail = DB::table('weather_daily_reports')
-            ->selectRaw('count(*) as count_days_with_snow')
-            ->whereNotNull('precipitation')
+            ->selectRaw('count(*) as count_days_with_hail')
             ->where("has_hail", 1)
             ->where('weather_station_id', $station->id)
             ->where("date", '>=', $start)
@@ -213,8 +210,15 @@ class StationMonthlyStatisticsController extends Controller
 
         $countDaysWithFog = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_fog')
-            ->whereNotNull('precipitation')
             ->where("has_fog", 1)
+            ->where('weather_station_id', $station->id)
+            ->where("date", '>=', $start)
+            ->where("date", '<=', $end)
+            ->first();
+
+        $countDaysWithGlaze = DB::table('weather_daily_reports')
+            ->selectRaw('count(*) as count_days_with_glaze')
+            ->where("has_glaze", 1)
             ->where('weather_station_id', $station->id)
             ->where("date", '>=', $start)
             ->where("date", '<=', $end)
@@ -222,7 +226,6 @@ class StationMonthlyStatisticsController extends Controller
 
         $countDaysWithFlood = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_flood')
-            ->whereNotNull('precipitation')
             ->where("has_flood", 1)
             ->where('weather_station_id', $station->id)
             ->where("date", '>=', $start)
@@ -231,7 +234,6 @@ class StationMonthlyStatisticsController extends Controller
 
         $countDaysWithStorm = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_storm')
-            ->whereNotNull('precipitation')
             ->where("has_storm", 1)
             ->where('weather_station_id', $station->id)
             ->where("date", '>=', $start)
@@ -270,10 +272,67 @@ class StationMonthlyStatisticsController extends Controller
             ->where("date", '<=', $end)
             ->first();
 
-        return view('pages.station-monthly-reports', [
-            "start_date" => $start,
-            "station" => $station,
-            "reports" => $reports,
-        ]);
+        $reportsWithMaxAvgWindSpeed = WeatherDailyReport::whereRaw('avg_wind_speed = '. $stats->max_avg_wind_speed)
+            ->where('weather_station_id', $station->id)
+            ->where("date", '>=', $start)
+            ->where("date", '<=', $end)
+            ->get();
+
+        $reportsWithMaxMaxWindSpeed = WeatherDailyReport::whereRaw('max_wind_speed = '. $stats->max_max_wind_speed)
+            ->where('weather_station_id', $station->id)
+            ->where("date", '>=', $start)
+            ->where("date", '<=', $end)
+            ->get();
+
+        $reportsWithMaxMaxPressure = WeatherDailyReport::whereRaw('max_pressure = '. $stats->max_max_pressure)
+            ->where('weather_station_id', $station->id)
+            ->where("date", '>=', $start)
+            ->where("date", '<=', $end)
+            ->get();
+
+        $reportsWithMinMinPressure = WeatherDailyReport::whereRaw('min_pressure = '. $stats->min_min_pressure)
+            ->where('weather_station_id', $station->id)
+            ->where("date", '>=', $start)
+            ->where("date", '<=', $end)
+            ->get();
+
+        return view('pages.station-monthly-statistics', compact(
+            'hasReports',
+            'start',
+            'station',
+            'reportsWithMaxTemperatureRange',
+            'reportsWithMinTemperatureRange',
+            'reportsWithMinMinTemperature',
+            'reportsWithMinMaxTemperature',
+            'reportsWithMaxMinTemperature',
+            'reportsWithMaxMaxTemperature',
+            'countMinTemperatureSubMinus5',
+            'countMinTemperatureSub0',
+            'countMinTemperatureOver20',
+            'countMaxTemperatureOver35',
+            'countMaxTemperatureOver30',
+            'countMaxTemperatureOver25',
+            'countMaxTemperatureSub0',
+            'countDaysWithPrecipitationOver1',
+            'countDaysWithPrecipitationOver5',
+            'countDaysWithPrecipitationOver10',
+            'countDaysWithPrecipitationOver40',
+            'reportsWithMaxPrecipitation',
+            'countDaysWithRain',
+            'countDaysWithFog',
+            'countDaysWithFlood',
+            'countDaysWithSnow',
+            'countDaysWithGlaze',
+            'countDaysWithHail',
+            'countDaysWithStorm',
+            'countDaysWithMaxWindSpeedOver36',
+            'countDaysWithMaxWindSpeedOver58',
+            'countDaysWithMaxWindSpeedOver76',
+            'countDaysWithMaxWindSpeedOver100',
+            'reportsWithMaxAvgWindSpeed',
+            'reportsWithMaxMaxWindSpeed',
+            'reportsWithMaxMaxPressure',
+            'reportsWithMinMinPressure',
+        ));
     }
 }

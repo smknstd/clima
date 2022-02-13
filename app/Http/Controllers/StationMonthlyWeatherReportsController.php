@@ -20,7 +20,7 @@ class StationMonthlyWeatherReportsController extends Controller
             ->get();
 
         return view('pages.station-monthly-reports', [
-            "start_date" => $start,
+            "start" => $start,
             "station" => $station,
             "reports" => $reports,
         ]);

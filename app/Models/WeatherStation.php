@@ -48,4 +48,12 @@ class WeatherStation extends Model
             ? ["model_key" => $attribute]
             : [];
     }
+
+    public function getStationThumbnail($size = 300)
+    {
+        if(count($this->visuals) > 0) {
+            return $this->visuals->first()->thumbnailFit($size, $size);
+        }
+        return asset('/img/default-station.jpg');
+    }
 }

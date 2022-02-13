@@ -12,7 +12,7 @@
     </x-slot>
 
     <x-slot name="meta_image">
-        {{ $station->visuals ? $station->visuals->first()->thumbnail(1200,627) : asset('/img/metas/stations.jpg') }}
+        {{ count($station->visuals) > 0 ? $station->visuals->first()->thumbnail(1200,627) : asset('/img/metas/stations.jpg') }}
     </x-slot>
 
     <x-slot name="content">
@@ -73,13 +73,14 @@
                         <div class="flex-grow py-2">
                             <h2 class="text-gray-900 text-lg title-font font-medium mb-1">Nombre de relevés</h2>
                             <p class="leading-relaxed text-base">{{ $report_count }}</p>
-                            <div class="inline-flex">
-                                <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0" href="{{ route('station-monthly-reports', [$station, today()->format('Y'), today()->format('m')]) }}">
+                            <div class="my-3">
+                                <a href="{{ route('station-monthly-reports', [$station, today()->format('Y'), today()->format('m')]) }}" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
                                     Voir les derniers relevés
-                                    <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                      <path d="M5 12h14"></path>
-                                      <path d="M12 5l7 7-7 7"></path>
-                                    </svg>
+                                </a>
+                            </div>
+                            <div class="">
+                                <a href="{{ route('station-monthly-statistics', [$station, today()->subMonth()->format('Y'), today()->subMonth()->format('m')]) }}" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+                                    Voir les statistiques du mois dernier
                                 </a>
                             </div>
                         </div>
