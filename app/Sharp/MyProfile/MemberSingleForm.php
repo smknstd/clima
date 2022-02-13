@@ -34,6 +34,7 @@ class MemberSingleForm extends SharpSingleForm
                 SharpFormTextField::make("name")
                     ->setLabel("Nom")
                     ->setMaxLength(300)
+                ->setHelpMessage("Vous êtes libre d'utiliser des initials ou un surnom si vous ne souhaitez pas affciher votre votre nom complet sur le site. ex: Arnaud B.")
             )
             ->addField(
                 SharpFormTextField::make("email")

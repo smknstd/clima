@@ -27,12 +27,13 @@
     <tbody class="bg-white divide-y divide-gray-200">
     @foreach($reports as $report)
         <tr>
-            <td class="pl-3 py-4 whitespace-nowrap font-medium bg-gray-100">
+            <td class="pl-3 py-4 whitespace-nowrap bg-gray-100">
                 @if($type === 'monthly')
-                    {{ ucfirst($report->date->isoFormat('ddd D')) }}
+                    <span class="text-gray-500 text-xs">{{ ucfirst($report->date->isoFormat('ddd')) }}</span> {{ $report->date->isoFormat('D') }}
                 @else
                     <a class="text-indigo-500 text-decoration-underline" href="{{ route('station-monthly-reports', [$report->weatherStation, today()->format('Y'), today()->format('m')]) }}">
                         {{ $report->weatherStation->city }}
+                        <div class="text-gray-500 text-xs">{{ Str::limit($report->weatherStation->postal_code, 2, '') }}</div>
                     </a>
                 @endif
             </td>

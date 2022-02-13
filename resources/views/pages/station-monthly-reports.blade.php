@@ -46,6 +46,11 @@
 
                 <div class="text-lg mb-6">
                     {{ Str::title($start->isoFormat('MMMM YYYY')) }}
+                    <div class="text-sm">
+                        <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0" href="{{ route('station-monthly-statistics', [$station, $start->format('Y'), $start->format('m')]) }}">
+                            Voir les statistiques
+                        </a>
+                    </div>
                 </div>
 
                 <div class="flex flex-col">
