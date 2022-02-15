@@ -44,3 +44,6 @@ Route::get('/station/{station}/statistics/{year}/{month}', [StationMonthlyStatis
 
 Route::get('/releves', [WeatherDailyReportsController::class, 'index'])
     ->name('reports');
+
+Route::get('/releves/{year}/{month}/{day}', [WeatherDailyReportsController::class, 'index'])
+    ->name('reports-day');

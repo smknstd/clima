@@ -14,8 +14,8 @@ class StationMonthlyWeatherReportsController extends Controller
         $end = $start->endOfMonth();
 
         $reports = WeatherDailyReport::where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->orderBy('date','asc')
             ->get();
 

@@ -16,8 +16,8 @@ class StationMonthlyStatisticsController extends Controller
 
         $hasReports = DB::table('weather_daily_reports')
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->exists();
 
         if(!$hasReports) {
@@ -46,100 +46,100 @@ class StationMonthlyStatisticsController extends Controller
             ->selectRaw('max(max_pressure) as max_max_pressure')
             ->selectRaw('min(min_pressure) as min_min_pressure')
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $reportsWithMinTemperatureRange = WeatherDailyReport::whereRaw('(max_temperature-min_temperature) = '. $stats->min_temperature_range)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->get();
 
         $reportsWithMaxTemperatureRange = WeatherDailyReport::whereRaw('(max_temperature-min_temperature) = '. $stats->max_temperature_range)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->get();
 
         $reportsWithMinMinTemperature = WeatherDailyReport::whereRaw('min_temperature = '. $stats->min_min_temperature)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->get();
 
         $reportsWithMaxMinTemperature = WeatherDailyReport::whereRaw('min_temperature = '. $stats->max_min_temperature)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->get();
 
         $reportsWithMinMaxTemperature = WeatherDailyReport::whereRaw('max_temperature = '. $stats->min_max_temperature)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->get();
 
         $reportsWithMaxMaxTemperature = WeatherDailyReport::whereRaw('max_temperature = '. $stats->max_max_temperature)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->get();
 
         $countMinTemperatureSubMinus5 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_min_temperature_sub_minus_5')
             ->where('min_temperature','<=',-500)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countMinTemperatureSub0 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_min_temperature_sub_0')
             ->where('min_temperature','<=',0)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countMinTemperatureOver20 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_min_temperature_over_20')
             ->where('min_temperature','>=',2000)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countMaxTemperatureOver25 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_max_temperature_over_25')
             ->where('min_temperature','>=',2500)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countMaxTemperatureOver30 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_max_temperature_over_30')
             ->where('min_temperature','>=',3000)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countMaxTemperatureOver35 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_max_temperature_over_35')
             ->where('min_temperature','>=',3500)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countMaxTemperatureSub0 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_max_temperature_sub_0')
             ->where('min_temperature','<=',0)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithPrecipitationOver1 = DB::table('weather_daily_reports')
@@ -147,8 +147,8 @@ class StationMonthlyStatisticsController extends Controller
             ->whereNotNull('precipitation')
             ->where("precipitation", '>=', 1)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithPrecipitationOver5 = DB::table('weather_daily_reports')
@@ -156,8 +156,8 @@ class StationMonthlyStatisticsController extends Controller
             ->whereNotNull('precipitation')
             ->where("precipitation", '>=', 5)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithPrecipitationOver10 = DB::table('weather_daily_reports')
@@ -165,8 +165,8 @@ class StationMonthlyStatisticsController extends Controller
             ->whereNotNull('precipitation')
             ->where("precipitation", '>=', 10)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithPrecipitationOver40 = DB::table('weather_daily_reports')
@@ -174,132 +174,133 @@ class StationMonthlyStatisticsController extends Controller
             ->whereNotNull('precipitation')
             ->where("precipitation", '>=', 40)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $reportsWithMaxPrecipitation = WeatherDailyReport::whereRaw('precipitation = '. $stats->max_precipitation)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->get();
 
         $countDaysWithRain = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_rain')
             ->where("has_rain", 1)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithSnow = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_snow')
             ->where("has_snow", 1)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithHail = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_hail')
             ->where("has_hail", 1)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithFog = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_fog')
             ->where("has_fog", 1)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithGlaze = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_glaze')
             ->where("has_glaze", 1)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithFlood = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_flood')
             ->where("has_flood", 1)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithStorm = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_storm')
             ->where("has_storm", 1)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithMaxWindSpeedOver36 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_max_wind_speed_over_36')
             ->where("max_wind_speed", '>=', 3600)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithMaxWindSpeedOver58 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_max_wind_speed_over_58')
             ->where("max_wind_speed", '>=', 5800)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithMaxWindSpeedOver76 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_max_wind_speed_over_76')
             ->where("max_wind_speed", '>=', 7600)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $countDaysWithMaxWindSpeedOver100 = DB::table('weather_daily_reports')
             ->selectRaw('count(*) as count_days_with_max_wind_speed_over_100')
             ->where("max_wind_speed", '>=', 10000)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->first();
 
         $reportsWithMaxAvgWindSpeed = WeatherDailyReport::whereRaw('avg_wind_speed = '. $stats->max_avg_wind_speed)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->get();
 
         $reportsWithMaxMaxWindSpeed = WeatherDailyReport::whereRaw('max_wind_speed = '. $stats->max_max_wind_speed)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->get();
 
         $reportsWithMaxMaxPressure = WeatherDailyReport::whereRaw('max_pressure = '. $stats->max_max_pressure)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->get();
 
         $reportsWithMinMinPressure = WeatherDailyReport::whereRaw('min_pressure = '. $stats->min_min_pressure)
             ->where('weather_station_id', $station->id)
-            ->where("date", '>=', $start)
-            ->where("date", '<=', $end)
+            ->whereDate("date", '>=', $start)
+            ->whereDate("date", '<=', $end)
             ->get();
 
         return view('pages.station-monthly-statistics', compact(
             'hasReports',
             'start',
             'station',
+            'stats',
             'reportsWithMaxTemperatureRange',
             'reportsWithMinTemperatureRange',
             'reportsWithMinMinTemperature',
