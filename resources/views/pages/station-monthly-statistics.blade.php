@@ -86,7 +86,7 @@
                                                 <td class="pl-3 py-4 whitespace-nowrap">
                                                     Amplitude journalière moyenne
                                                 </td>
-                                                <td class="pl-3 py-4 whitespace-nowrap">
+                                                <td class="pl-3 py-4 whitespace-nowrap bg-gray-100">
                                                     {{ format_report_value_from_storage($stats->avg_temperature_range) }}°c
                                                 </td>
                                                 <td class="pl-3 py-4 whitespace-nowrap">
@@ -96,7 +96,7 @@
                                                 <td class="pl-3 py-4 whitespace-nowrap">
                                                     Amplitude journalière minimale
                                                 </td>
-                                                <td class="pl-3 py-4 whitespace-nowrap">
+                                                <td class="pl-3 py-4 whitespace-nowrap bg-gray-100">
                                                     {{ format_report_value_from_storage($stats->min_temperature_range) }}°c
                                                 </td>
                                                 <td class="pl-3 py-4 whitespace-nowrap">
@@ -107,7 +107,7 @@
                                                 <td class="pl-3 py-4 whitespace-nowrap">
                                                     Amplitude journalière maximale
                                                 </td>
-                                                <td class="pl-3 py-4 whitespace-nowrap">
+                                                <td class="pl-3 py-4 whitespace-nowrap bg-gray-100">
                                                     {{ format_report_value_from_storage($stats->max_temperature_range) }}°c
                                                 </td>
                                                 <td class="pl-3 py-4 whitespace-nowrap">
