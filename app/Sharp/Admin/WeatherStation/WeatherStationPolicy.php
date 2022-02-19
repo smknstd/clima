@@ -11,6 +11,11 @@ class WeatherStationPolicy
         return $user->isAdmin();
     }
 
+    public function create(User $user): bool
+    {
+        return false;
+    }
+
     public function update(User $user, $instanceId): bool
     {
         return $user->isAdmin();
@@ -18,6 +23,6 @@ class WeatherStationPolicy
 
     public function delete(User $user, $instanceId): bool
     {
-        return $user->isAdmin();
+        return false;
     }
 }

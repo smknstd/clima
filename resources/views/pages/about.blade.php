@@ -19,7 +19,7 @@
 
         <section class="text-gray-600 body-font">
             <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
-                <img class="lg:w-3/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="hero" src="{{ asset('/img/association.jpg') }}">
+                <img class="lg:w-3/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded-lg" alt="hero" src="{{ asset('/img/association.jpg') }}">
                 <div class="text-left lg:w-1/2 w-full">
                     <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">A propos de l'association</h1>
                     <p class="mb-8 leading-relaxed">

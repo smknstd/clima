@@ -38,10 +38,10 @@
                 @endif
             </td>
             <td class="pl-3 py-4 whitespace-nowrap font-medium bg-{{ get_bg_temperature('min', $report->min_temperature, $report->date) }}">
-                {{ format_report_value_from_storage($report->min_temperature, 1) }} °c
+                {{ format_report_value_from_storage($report->min_temperature, 1, '°c') }}
             </td>
             <td class="pl-3 py-4 whitespace-nowrap font-medium bg-{{ get_bg_temperature('max', $report->max_temperature, $report->date) }}">
-                {{ format_report_value_from_storage($report->max_temperature, 1) }} °c
+                {{ format_report_value_from_storage($report->max_temperature, 1, '°c') }}
             </td>
             <td class="pl-3 py-4 whitespace-nowrap bg-gray-100">
                 {{ $report->pressure }}
@@ -61,7 +61,9 @@
             </td>
             @endif
             <td class="pl-3 py-4 whitespace-nowrap bg-gray-100">
-                {{ $report->sunshine_duration }} h
+                @if($report->sunshine_duration)
+                    {{ $report->sunshine_duration }} h
+                @endif
             </td>
             <td class="pl-3 py-4 whitespace-nowrap bg-gray-100">
                 @if($report->wind_direction)

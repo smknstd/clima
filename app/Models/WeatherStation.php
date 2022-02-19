@@ -13,6 +13,17 @@ class WeatherStation extends Model
     use HasFactory, SoftDeletes;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'user_id',
+        'city',
+        'postal_code',
+    ];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array

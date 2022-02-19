@@ -75,7 +75,8 @@ class WeatherStationSingleShow extends SharpSingleShow
                      ->addColumn(6, function(ShowLayoutColumn $column) {
                          $column
                              ->withSingleField('description')
-                             ->withSingleField('creation_date');
+                             ->withSingleField('creation_date')
+                             ->withSingleField('website_url');
                      })
                      ->addColumn(6, function(ShowLayoutColumn $column) {
                          $column
@@ -87,8 +88,7 @@ class WeatherStationSingleShow extends SharpSingleShow
                  $section
                      ->addColumn(6, function(ShowLayoutColumn $column) {
                          $column
-                             ->withSingleField('hardware_details')
-                             ->withSingleField('website_url');
+                             ->withSingleField('hardware_details');
                      })
                      ->addColumn(6, function(ShowLayoutColumn $column) {
                          $column
@@ -124,13 +124,15 @@ class WeatherStationSingleShow extends SharpSingleShow
                 return WeatherDailyReport::where('weather_station_id', $weatherStation->id)->count();
             })
             ->setCustomTransformer("oldest_report_date", function ($value, WeatherStation $weatherStation) {
-                if ($result = WeatherDailyReport::selectRaw('min(date) as oldest_created_at')->where('weather_station_id', $weatherStation->id)->first()) {
+                $result = WeatherDailyReport::selectRaw('min(date) as oldest_created_at')->where('weather_station_id', $weatherStation->id)->first();
+                if ($result->oldest_created_at) {
                     return Carbon::parse($result->oldest_created_at)->isoFormat('LL');
                 }
                 return 'aucun relevé enregistré';
             })
             ->setCustomTransformer("last_report_date", function ($value, WeatherStation $weatherStation) {
-                if ($result = WeatherDailyReport::selectRaw('max(date) as last_created_at')->where('weather_station_id', $weatherStation->id)->first()) {
+                $result = WeatherDailyReport::selectRaw('max(date) as last_created_at')->where('weather_station_id', $weatherStation->id)->first();
+                if ($result->last_created_at) {
                     return Carbon::parse($result->last_created_at)->isoFormat('LL');
                 }
                 return 'aucun relevé enregistré';
@@ -147,7 +149,7 @@ class WeatherStationSingleShow extends SharpSingleShow
                 }, '');
             })
             ->setCustomTransformer("website_url", function ($value, WeatherStation $weatherStation) {
-                return sprintf("<a href='%s'>%s</a>", $value, $value);
+                return $value ? sprintf("<a href='%s'>%s</a>", $value, $value) : null;
             })
             ->transform(auth()->user()->weatherStation);
     }

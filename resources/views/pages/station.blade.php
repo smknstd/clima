@@ -30,7 +30,7 @@
                     @foreach($station->visuals as $visual)
                     <div class="lg:w-1/3 sm:w-1/2 p-4">
                         <div class="flex relative">
-                            <img alt="gallery" class="w-full h-full object-cover object-center" src="{{ $visual->thumbnail(600) }}">
+                            <img alt="gallery" class="w-full h-full object-cover object-center rounded-lg" src="{{ $visual->thumbnail(600) }}">
                         </div>
                     </div>
                     @endforeach

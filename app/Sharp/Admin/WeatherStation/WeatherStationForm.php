@@ -140,11 +140,7 @@ class WeatherStationForm extends SharpForm
 
     function update($id, array $data)
     {
-        $station = $id
-            ? WeatherStation::findOrFail($id)
-            : new WeatherStation([
-                "user_id" => auth()->id(),
-            ]);
+        $station = WeatherStation::findOrFail($id);
 
         $this->save($station, $data);
 

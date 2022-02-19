@@ -4,6 +4,7 @@ namespace App\Sharp\Admin\User;
 
 use App\Models\Enums\UserRole;
 use App\Models\User;
+use App\Models\WeatherStation;
 use Code16\Sharp\Form\Eloquent\Uploads\Transformers\SharpUploadModelFormAttributeTransformer;
 use Code16\Sharp\Form\Eloquent\WithSharpFormEloquentUpdater;
 use Code16\Sharp\Form\Fields\SharpFormSelectField;
@@ -106,15 +107,19 @@ class UserForm extends SharpForm
 
     function update($id, array $data)
     {
-        $user = $id
-            ? User::findOrFail($id)
-            : new User([
+        if ($id) {
+            $user = User::findOrFail($id);
+            $this->save($user, $data);
+        } else {
+            $user = new User([
                 "password" => Str::random()
             ]);
-
-        $this->save($user, $data);
-
-        if(!$id) {
+            $this->save($user, $data);
+            WeatherStation::create([
+                "user_id" => $user->id,
+                "city" => '???',
+                "postal_code" => '???'
+            ]);
             $this->notify("L’utilisateur a été créé! Utilisez la commande de choix du mot de passe pour lui en définir un.");
         }
 

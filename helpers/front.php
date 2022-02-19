@@ -18,8 +18,12 @@ function format_report_value_in_cm_from_storage($value) : string
     return round(number_format($value/10, 2, ".", ""), 1) . " cm";
 }
 
-function get_bg_temperature(string $type, int $temperature, Carbon $date)
+function get_bg_temperature(string $type, ?int $temperature, Carbon $date)
 {
+    if(!$temperature) {
+        return 'grey-50';
+    }
+
     $roundedTemperature = (int) round($temperature/100);
 
     $seasonal = ($type === 'max') ? [

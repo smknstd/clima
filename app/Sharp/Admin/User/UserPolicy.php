@@ -10,4 +10,9 @@ class UserPolicy
     {
         return $user->isAdmin();
     }
+
+    public function delete(User $user, $instanceId): bool
+    {
+        return false;
+    }
 }

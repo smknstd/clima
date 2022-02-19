@@ -63,7 +63,7 @@
                     </span>
                     <div class="text-sm mt-3">
                         <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0" href="{{ route('station-monthly-reports', [$station, $start->format('Y'), $start->format('m')]) }}">
-                            Voir les relevés
+                            Voir les {{ $stats->total_count_reports ?? '' }} relevés
                         </a>
                     </div>
                 </div>
@@ -72,51 +72,24 @@
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 lg:w-1/2 md:w-1/2 w-5/6">
                         <div class="py-2 align-middle inline-block min-w-full sm: lg:px-8">
                             @if($hasReports)
-                                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                                    <table class="min-w-full divide-y divide-gray-200">
-                                        <thead class="bg-gray-100">
-                                        <tr>
-                                            <th scope="col" class="pl-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Températures</th>
-                                            <th scope="col" class="pl-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                                            <th scope="col" class="pl-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="bg-white divide-y divide-gray-200">
-                                            <tr>
-                                                <td class="pl-3 py-4 whitespace-nowrap">
-                                                    Amplitude journalière moyenne
-                                                </td>
-                                                <td class="pl-3 py-4 whitespace-nowrap bg-gray-100">
-                                                    {{ format_report_value_from_storage($stats->avg_temperature_range) }}°c
-                                                </td>
-                                                <td class="pl-3 py-4 whitespace-nowrap">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pl-3 py-4 whitespace-nowrap">
-                                                    Amplitude journalière minimale
-                                                </td>
-                                                <td class="pl-3 py-4 whitespace-nowrap bg-gray-100">
-                                                    {{ format_report_value_from_storage($stats->min_temperature_range) }}°c
-                                                </td>
-                                                <td class="pl-3 py-4 whitespace-nowrap">
-                                                    {{ $reportsWithMinTemperatureRange->map(fn(\App\Models\WeatherDailyReport $report) => 'le ' . $report->date->format('d/m'))->implode(', ') }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pl-3 py-4 whitespace-nowrap">
-                                                    Amplitude journalière maximale
-                                                </td>
-                                                <td class="pl-3 py-4 whitespace-nowrap bg-gray-100">
-                                                    {{ format_report_value_from_storage($stats->max_temperature_range) }}°c
-                                                </td>
-                                                <td class="pl-3 py-4 whitespace-nowrap">
-                                                    {{ $reportsWithMaxTemperatureRange->map(fn(\App\Models\WeatherDailyReport $report) => 'le ' . $report->date->format('d/m'))->implode(', ') }}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                @if($stats->min_temperature_range)
+                                    @include('statistics.temperatures')
+                                    @include('statistics.min-temperatures')
+                                    @include('statistics.max-temperatures')
+                                @endif
+                                @if($stats->sum_precipitation)
+                                    @include('statistics.precipitations')
+                                @endif
+                                @if($stats->avg_avg_wind_speed)
+                                    @include('statistics.wind')
+                                @endif
+                                @if($stats->max_max_pressure)
+                                    @include('statistics.pressure')
+                                @endif
+                                @include('statistics.events')
+                                @if($stats->sum_sunshine_duration)
+                                    @include('statistics.insulation')
+                                @endif
                             @else
                                 Aucun relevé enregistré pour cette période
                             @endif
