@@ -1,14 +1,14 @@
 <x-layout class="home">
     <x-slot name="title">
-        Blog Association CLI.M.A.
+        Blog CLI.M.A.
     </x-slot>
 
     <x-slot name="meta_title">
-        Blog Association CLI.M.A.
+        Blog CLI.M.A.
     </x-slot>
 
     <x-slot name="meta_description">
-        Blog de l'Association CLI.M.A.
+        Dernières nouvelles de l'Association CLI.M.A. et photos partagées par les membres
     </x-slot>
 
     <x-slot name="meta_image">

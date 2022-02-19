@@ -43,9 +43,9 @@ class BlogpostList extends SharpEntityList
         $fieldsLayout
             ->addColumn("cover", 1)
             ->addColumn("created_at", 2)
-            ->addColumn("published_at", 2)
+            ->addColumn("published_at", 3)
             ->addColumn("type", 1)
-            ->addColumn("title", 6);
+            ->addColumn("title", 5);
     }
 
 
@@ -53,7 +53,7 @@ class BlogpostList extends SharpEntityList
     {
         $this
             ->configureMultiformAttribute("blogpost_type")
-            ->configureEntityState("blogpost_state", new BlogpostStateHandler())
+            ->configureEntityState("state", BlogpostStateHandler::class)
             ->configureSearchable()
             ->configurePaginated();
     }
@@ -84,7 +84,11 @@ class BlogpostList extends SharpEntityList
                 return $post->created_at->format("d/m/y H:i");
             })
             ->setCustomTransformer("published_at", function ($value, Blogpost $post) {
-                return $post->created_at->format("d/m/y H:i");
+                return sprintf(
+                    '<span style="color: gray">Etat:</span> <b>%s</b><br><span style="color: gray">Date affichée:</span> %s',
+                    $post->state->label(),
+                    $post->created_at->format("d/m/y")
+                );
             })
             ->setCustomTransformer("cover", (new SharpUploadModelThumbnailUrlTransformer(100))->renderAsImageTag())
             ->transform(

@@ -27,6 +27,9 @@ Route::get('/', [HomeController::class, 'index'])
 Route::get('/blog', [BlogController::class, 'index'])
     ->name('blog');
 
+Route::get('/blog/{blogpost}', [BlogController::class, 'show'])
+    ->name('blogpost');
+
 Route::get('/a-propos', [AboutController::class, 'index'])
     ->name('about');
 

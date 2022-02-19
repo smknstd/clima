@@ -16,4 +16,11 @@ class BlogController extends Controller
             "blogposts" => $blogposts,
         ]);
     }
+
+    public function show(Blogpost $blogpost)
+    {
+        return view('pages.blogpost', [
+            "blogpost" => $blogpost,
+        ]);
+    }
 }

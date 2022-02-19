@@ -12,18 +12,32 @@ class BlogpostPolicy
         return true;
     }
 
+    public function create(User $user): bool
+    {
+        return true;
+    }
+
     public function view(User $user, $instanceId)
     {
-        return $user->isAdmin() || (Blogpost::find($instanceId)->user_id === $user->is);
+        if (!$instanceId) {
+            return false;
+        }
+        return Blogpost::find($instanceId)->user_id === $user->id;
     }
 
     public function update(User $user, $instanceId)
     {
-        return $user->isAdmin() || (Blogpost::find($instanceId)->user_id === $user->is);
+        if (!$instanceId) {
+            return false;
+        }
+        return Blogpost::find($instanceId)->user_id === $user->id;
     }
 
     public function delete(User $user, $instanceId)
     {
-        return $user->isAdmin() || (Blogpost::find($instanceId)->user_id === $user->is);
+        if (!$instanceId) {
+            return false;
+        }
+        return Blogpost::find($instanceId)->user_id === $user->id;
     }
 }

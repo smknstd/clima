@@ -68,8 +68,8 @@
             <td class="pl-3 py-4 whitespace-nowrap bg-gray-100">
                 @if($report->wind_direction)
                     <span class="text-3xl hint--bottom hint--rounded" aria-label="{{ $report->wind_direction->label() }}">
-                                                    <i class="wi wi-wind {{ $report->wind_direction->value }}"></i>
-                                                </span>
+                        <i class="wi wi-wind {{ $report->wind_direction->value }}"></i>
+                    </span>
                 @endif
             </td>
             <td class="pl-3 py-4 whitespace-nowrap">
