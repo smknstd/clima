@@ -78,7 +78,7 @@
                                     Voir les derniers relevés
                                 </a>
                             </div>
-                            <div class="">
+                            <div>
                                 <a href="{{ route('station-monthly-statistics', [$station, today()->subMonth()->format('Y'), today()->subMonth()->format('m')]) }}" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
                                     Voir les statistiques du mois dernier
                                 </a>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\StationController;
 use App\Http\Controllers\StationMonthlyStatisticsController;
 use App\Http\Controllers\StationMonthlyWeatherReportsController;
@@ -29,6 +30,9 @@ Route::get('/blog', [BlogController::class, 'index'])
 
 Route::get('/blog/{blogpost}', [BlogController::class, 'show'])
     ->name('blogpost');
+
+Route::get('/reviews/{user}', [ReviewsController::class, 'show'])
+    ->name('reviews');
 
 Route::get('/a-propos', [AboutController::class, 'index'])
     ->name('about');

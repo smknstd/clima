@@ -513,6 +513,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .-mb-10 {
   margin-bottom: -2.5rem;
 }
+.mb-12 {
+  margin-bottom: 3rem;
+}
 .inline-block {
   display: inline-block;
 }

@@ -10,7 +10,7 @@ class BlogController extends Controller
     {
         $blogposts = Blogpost::where('published_at','<', now())
             ->orderBy('published_at', 'desc')
-            ->paginate(6);
+            ->paginate(9);
 
         return view('pages.blog', [
             "blogposts" => $blogposts,

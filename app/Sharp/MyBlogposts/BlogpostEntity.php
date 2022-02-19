@@ -16,7 +16,7 @@ class BlogpostEntity extends SharpEntity
         return [
             BlogpostType::NEWS->value => [NewsForm::class, "Brève"],
             BlogpostType::SINGLE_PHOTO->value => [SinglePhotoForm::class, "Photo"],
-//            'review' => [ReviewForm::class, "Bilan périodique"],
+            BlogpostType::REVIEW->value => [ReviewForm::class, "Bilan périodique"],
         ];
     }
 }
