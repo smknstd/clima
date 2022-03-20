@@ -83,6 +83,13 @@
                                     Voir les statistiques du mois dernier
                                 </a>
                             </div>
+                            @if($station->user->hasReview())
+                                <div class="my-3">
+                                    <a href="{{ route('reviews', [$station->user]) }}" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+                                        Voir tous les bilans périodiques de {{ $station->user->name }}
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -32,17 +32,20 @@
                             </span>
                         </span>
                     </div>
-                    <div class="my-3">
-                        <a href="{{ route('reviews', [$blogpost->user]) }}" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
-                            Voir tous les bilans de ce membre
-                        </a>
-                    </div>
+                    <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">{{ Str::upper($blogpost->type->label()) }}</h2>
                     <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
                         {{ $blogpost->title }}
                     </h1>
                     <p class="mb-8 leading-relaxed">
                         {!! $blogpost->content !!}
                     </p>
+                    @if($blogpost->type === \App\Models\Enums\BlogpostType::REVIEW)
+                        <div class="my-3">
+                            <a href="{{ route('reviews', [$blogpost->user]) }}" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+                                Voir tous les bilans périodiques de ce membre
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </section>

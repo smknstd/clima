@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Enums\BlogpostType;
 use App\Models\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -76,6 +77,14 @@ class User extends Authenticatable
             return $this->avatar->thumbnailFit($size, $size);
         }
         return asset('/img/default-avatar.jpg');
+    }
+
+    public function hasReview()
+    {
+        return Blogpost::where('published_at','<', now())
+            ->where('type', BlogpostType::REVIEW)
+            ->where('user_id', $this->id)
+            ->exists();
     }
 
     public function getDefaultAttributesFor(string $attribute): array
