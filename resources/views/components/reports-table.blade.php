@@ -81,37 +81,37 @@
             </td>
             <td class="pl-2 py-1 max-w-xs">
                 @if($report->has_rain)
-                    <div class="px-3 inline-flex text-lg rounded-full bg-green-100 text-green-800 cursor-default hint--bottom hint--rounded" aria-label="Pluie">
+                    <div class="px-3 py-2 inline-flex text-lg rounded-full bg-green-100 text-green-800 cursor-default hint--bottom hint--rounded" aria-label="Pluie">
                         <i class="wi wi-raindrop"></i>
                     </div>
                 @endif
                 @if($report->has_storm)
-                    <div class="px-3 inline-flex text-lg rounded-full bg-orange-100 text-orange-800 cursor-default hint--bottom hint--rounded" aria-label="Orage (tonnerre perçu)">
+                    <div class="px-3 py-2 inline-flex text-lg rounded-full bg-orange-100 text-orange-800 cursor-default hint--bottom hint--rounded" aria-label="Orage (tonnerre perçu)">
                         <i class="wi wi-lightning"></i>
                     </div>
                 @endif
                 @if($report->has_hail)
-                    <div class="px-3 inline-flex text-xl rounded-full bg-blue-100 text-blue-800 cursor-default hint--bottom hint--rounded" aria-label="Grêle">
+                    <div class="px-3 py-2 inline-flex text-xl rounded-full bg-blue-100 text-blue-800 cursor-default hint--bottom hint--rounded" aria-label="Grêle">
                         <i class="wi wi-hail"></i>
                     </div>
                 @endif
                 @if($report->has_snow)
-                    <div class="px-3 inline-flex text-lg rounded-full bg-sky-100 text-sky-800 cursor-default hint--bottom hint--rounded" aria-label="Neige">
+                    <div class="px-3 py-2 inline-flex text-lg rounded-full bg-sky-100 text-sky-800 cursor-default hint--bottom hint--rounded" aria-label="Neige">
                         <i class="wi wi-snow"></i>
                     </div>
                 @endif
                 @if($report->has_fog)
-                    <div class="px-3 inline-flex text-lg rounded-full bg-yellow-100 text-yellow-800 cursor-default hint--bottom hint--rounded" aria-label="Brouillard">
+                    <div class="px-3 py-2 inline-flex text-lg rounded-full bg-yellow-100 text-yellow-800 cursor-default hint--bottom hint--rounded" aria-label="Brouillard">
                         <i class="wi wi-windy"></i>
                     </div>
                 @endif
                 @if($report->has_flood)
-                    <div class="px-3 inline-flex text-xl rounded-full bg-amber-100 text-amber-800 cursor-default hint--bottom hint--rounded" aria-label="Innondation">
+                    <div class="px-3 py-2 inline-flex text-xl rounded-full bg-amber-100 text-amber-800 cursor-default hint--bottom hint--rounded" aria-label="Innondation">
                         <i class="wi wi-flood"></i>
                     </div>
                 @endif
                 @if($report->has_glaze)
-                    <div class="px-3 inline-flex text-xl rounded-full bg-amber-100 text-amber-800 cursor-default hint--bottom hint--rounded" aria-label="Verglas">
+                    <div class="px-3 py-2 inline-flex text-xl rounded-full bg-amber-100 text-amber-800 cursor-default hint--bottom hint--rounded" aria-label="Verglas">
                         <i class="wi wi-snowflake-cold"></i>
                     </div>
                 @endif
